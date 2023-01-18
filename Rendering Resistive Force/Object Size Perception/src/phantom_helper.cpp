@@ -142,6 +142,11 @@ namespace PHANTOM_TOOLS
         if (bool_RighToLeft)  bool_RighToLeft = HD_FALSE;
         else bool_RighToLeft = HD_TRUE;
     }
+
+    float get_kStiffness()
+    {
+        return kStiffness;
+    }
 }
 
 
@@ -270,7 +275,7 @@ HDCallbackCode HDCALLBACK DeviceStateCallback(void* data)
 
     if (once)
     {
-        std::cout << PHANTOM_TOOLS::kStiffness << "N 农扁狼 force 积己" << '\n';
+        //std::cout << PHANTOM_TOOLS::kStiffness << "N 农扁狼 force 积己" << '\n';
         once = false;
         PHANTOM_TOOLS::printOutput(PHANTOM_TOOLS::kStiffness);
     }

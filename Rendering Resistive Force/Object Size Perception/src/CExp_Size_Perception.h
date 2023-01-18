@@ -143,6 +143,7 @@ public:
 	int animation_cnt;
 	Serial* m_pSerial_vib;
 	vector<int>usr_input;	//결과 저장
+	vector<float>force_change;
 	time_t animation_start, animation_end;
 
 #ifdef _SS_TEST

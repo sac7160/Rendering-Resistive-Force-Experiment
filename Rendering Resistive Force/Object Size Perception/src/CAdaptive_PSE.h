@@ -38,7 +38,8 @@ struct exp_result {
 	double max_coll_depth[2][2];
 	
 	//230113 추가
-	vector<int> omni_force;
+	vector<int> omni_force_user_input;
+	vector<float> omni_force_change;
 };
 
 class cAdaptive_PSE : public cGenericExp
@@ -62,6 +63,7 @@ public:
 	double calculatePSE();
 	int calcStimulus(double curr_stimulus, int curr_answer, double *next_stimulus=NULL);
 //	void setStimulus(bool type, float stimulus);
+	int calcForce_tmp();	//실험 종료를 위한 함수 임시 설정
 public:
 	//-----------------------------------------------------------------------
     // MEMBERS:

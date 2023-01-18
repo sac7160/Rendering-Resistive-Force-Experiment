@@ -97,7 +97,7 @@ void idle()
 				m_expObjSize.tmp = false;
 				m_expObjSize.square_pos = 0;
 				m_expObjSize.moveToNextPhase();
-				printf("소요시간: %lf\n", (double)(m_expObjSize.animation_end - m_expObjSize.animation_start) / CLOCKS_PER_SEC);
+				//printf("소요시간: %lf\n", (double)(m_expObjSize.animation_end - m_expObjSize.animation_start) / CLOCKS_PER_SEC);
 			}
 		}
 		else if(m_expObjSize.animation_cnt == 3 || m_expObjSize.animation_cnt == 4)

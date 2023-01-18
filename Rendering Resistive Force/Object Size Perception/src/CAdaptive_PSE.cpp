@@ -76,6 +76,12 @@ int cAdaptive_PSE::calcStimulus(double curr_stimulus, int curr_answer, double *n
 	return ret;
 }
 
+int cAdaptive_PSE::calcForce_tmp()
+{
+	if (cAdaptive_PSE::m_curr_trial_no == 3) return 1;
+	else return 0;
+}
+
 double cAdaptive_PSE::calculatePSE()
 {
 	double sum_est = 0;

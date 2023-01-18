@@ -19,6 +19,7 @@ namespace PHANTOM_TOOLS
 	void exitHandler();
 	void printOutput(double);
 	void change_direction();
+	float get_kStiffness();
 	static HDboolean bRenderForce;
 	static HDboolean bool_RighToLeft;
 	static HDdouble kStiffness;
