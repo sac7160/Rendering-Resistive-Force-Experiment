@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Exp">
+      <UniqueIdentifier>{e79f6246-c7c8-4ee6-ba37-bfc1790598cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Exp">
+      <UniqueIdentifier>{728d57a4-e423-49bd-ac6d-8b38580e6421}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Geometry">
+      <UniqueIdentifier>{5717e468-3f13-4734-a912-f532bfed52c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PHANToM">
+      <UniqueIdentifier>{9f768277-c0b5-4339-b574-e806712b4363}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Geometry">
+      <UniqueIdentifier>{5e7c282c-9323-4fd6-bce3-dc81053d9ff0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\PHANToM">
+      <UniqueIdentifier>{59acf24d-1238-400e-8a2b-5df1a8c50605}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CAdaptive_PSE.cpp">
+      <Filter>Source Files\Exp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CGenericExp.cpp">
+      <Filter>Source Files\Exp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CGenericLink.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CLink.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\geometry_helper.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\phantom_helper.cpp">
+      <Filter>Source Files\PHANToM</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CMCI_sound.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\display_helper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CExp_Size_Perception.cpp">
+      <Filter>Source Files\Exp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Serial.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\CAdaptive_PSE.h">
+      <Filter>Header Files\Exp</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CGenericExp.h">
+      <Filter>Header Files\Exp</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CGenericLink.h">
+      <Filter>Header Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CLink.h">
+      <Filter>Header Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="src\geometry_helper.h">
+      <Filter>Header Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="src\phantom_helper.h">
+      <Filter>Header Files\PHANToM</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CMCI_sound.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\display_helper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CExp_Size_Perception.h">
+      <Filter>Header Files\Exp</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SerialClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

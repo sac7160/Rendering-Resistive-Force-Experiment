@@ -1,0 +1,5 @@
+﻿hdu.lib(hduError.obj) : warning LNK4099: 'HDU.pdb' PDB를 'hdu.lib(hduError.obj)' 또는 'C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\x64\Debug\HDU.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+hdu.lib(hduAfx.obj) : warning LNK4099: 'HDU.pdb' PDB를 'hdu.lib(hduAfx.obj)' 또는 'C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\x64\Debug\HDU.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+CExp_Size_Perception.obj : error LNK2019: "public: int __cdecl cExp_Size_Perception::setOutPwm(int,double)" (?setOutPwm@cExp_Size_Perception@@QEAAHHN@Z)"public: virtual int __cdecl cExp_Size_Perception::handleKeyboard(unsigned char,char *)" (?handleKeyboard@cExp_Size_Perception@@UEAAHEPEAD@Z) 함수에서 참조되는 확인할 수 없는 외부 기호
+CExp_Size_Perception.obj : error LNK2019: "unsigned int __cdecl posCtrlThread(void *)" (?posCtrlThread@@YAIPEAX@Z)"public: void __cdecl cExp_Size_Perception::init(void)" (?init@cExp_Size_Perception@@QEAAXXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\x64\Debug\Object Size Perception.exe : fatal error LNK1120: 2개의 확인할 수 없는 외부 참조입니다.

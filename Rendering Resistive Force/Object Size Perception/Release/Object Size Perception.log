@@ -1,0 +1,226 @@
+﻿  CAdaptive_PSE.cpp
+  CExp_Size_Perception.cpp
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\phantom_helper.h(3,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'HD/hd.h': No such file or directory
+  CGenericExp.cpp
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\CGenericExp.cpp(20,4): error C2664: 'BOOL CreateDirectoryW(LPCWSTR,LPSECURITY_ATTRIBUTES)': 인수 1을(를) 'char *'에서 'LPCWSTR'(으)로 변환할 수 없습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\CGenericExp.cpp(20,22): message : 가리킨 형식이 관련이 없습니다. 변환하려면 reinterpret_cast, C 스타일 캐스트 또는 괄호가 있는 함수 스타일 캐스트가 필요합니다.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\fileapi.h(61,1): message : 'CreateDirectoryW' 선언을 참조하십시오.
+  CGenericLink.cpp
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\CGenericLink.h(31,16): warning C4244: '=': 'const double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\CGenericLink.h(31,32): warning C4244: '=': 'const double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\CGenericLink.h(31,48): warning C4244: '=': 'const double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\CGenericLink.cpp(51,75): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\CGenericLink.cpp(51,57): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\CGenericLink.cpp(51,39): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\CGenericLink.cpp(51,20): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  CLink.cpp
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\cGenericLink.h(31,16): warning C4244: '=': 'const double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\cGenericLink.h(31,32): warning C4244: '=': 'const double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\cGenericLink.h(31,48): warning C4244: '=': 'const double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\CLink.cpp(48,87): warning C4244: '인수': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\CLink.cpp(48,118): warning C4244: '인수': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\CLink.cpp(48,149): warning C4244: '인수': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\CLink.cpp(71,59): warning C4244: '인수': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\CLink.cpp(72,69): warning C4244: '인수': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\CLink.cpp(117,76): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\CLink.cpp(117,58): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\CLink.cpp(117,40): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\CLink.cpp(117,21): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\CLink.cpp(113,8): warning C4101: 'mat' :참조되지 않은 지역 변수입니다.
+  CMCI_sound.cpp
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\CMCI_sound.cpp(12,57): error C2664: 'MCIERROR mciSendStringW(LPCWSTR,LPWSTR,UINT,HWND)': 인수 1을(를) 'const _Elem *'에서 'LPCWSTR'(으)로 변환할 수 없습니다.
+          with
+          [
+              _Elem=char
+          ]
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\CMCI_sound.cpp(12,43): message : 가리킨 형식이 관련이 없습니다. 변환하려면 reinterpret_cast, C 스타일 캐스트 또는 괄호가 있는 함수 스타일 캐스트가 필요합니다.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\mciapi.h(88,1): message : 'mciSendStringW' 선언을 참조하십시오.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\CMCI_sound.cpp(30,53): error C2664: 'MCIERROR mciSendStringW(LPCWSTR,LPWSTR,UINT,HWND)': 인수 1을(를) 'const _Elem *'에서 'LPCWSTR'(으)로 변환할 수 없습니다.
+          with
+          [
+              _Elem=char
+          ]
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\CMCI_sound.cpp(30,39): message : 가리킨 형식이 관련이 없습니다. 변환하려면 reinterpret_cast, C 스타일 캐스트 또는 괄호가 있는 함수 스타일 캐스트가 필요합니다.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\mciapi.h(88,1): message : 'mciSendStringW' 선언을 참조하십시오.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\CMCI_sound.cpp(40,52): error C2664: 'MCIERROR mciSendStringW(LPCWSTR,LPWSTR,UINT,HWND)': 인수 1을(를) 'const _Elem *'에서 'LPCWSTR'(으)로 변환할 수 없습니다.
+          with
+          [
+              _Elem=char
+          ]
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\CMCI_sound.cpp(40,38): message : 가리킨 형식이 관련이 없습니다. 변환하려면 reinterpret_cast, C 스타일 캐스트 또는 괄호가 있는 함수 스타일 캐스트가 필요합니다.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\mciapi.h(88,1): message : 'mciSendStringW' 선언을 참조하십시오.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\CMCI_sound.cpp(50,52): error C2664: 'MCIERROR mciSendStringW(LPCWSTR,LPWSTR,UINT,HWND)': 인수 1을(를) 'const _Elem *'에서 'LPCWSTR'(으)로 변환할 수 없습니다.
+          with
+          [
+              _Elem=char
+          ]
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\CMCI_sound.cpp(50,38): message : 가리킨 형식이 관련이 없습니다. 변환하려면 reinterpret_cast, C 스타일 캐스트 또는 괄호가 있는 함수 스타일 캐스트가 필요합니다.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\mciapi.h(88,1): message : 'mciSendStringW' 선언을 참조하십시오.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\CMCI_sound.cpp(60,52): error C2664: 'MCIERROR mciSendStringW(LPCWSTR,LPWSTR,UINT,HWND)': 인수 1을(를) 'const _Elem *'에서 'LPCWSTR'(으)로 변환할 수 없습니다.
+          with
+          [
+              _Elem=char
+          ]
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\CMCI_sound.cpp(60,38): message : 가리킨 형식이 관련이 없습니다. 변환하려면 reinterpret_cast, C 스타일 캐스트 또는 괄호가 있는 함수 스타일 캐스트가 필요합니다.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\mciapi.h(88,1): message : 'mciSendStringW' 선언을 참조하십시오.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\CMCI_sound.cpp(70,54): error C2664: 'MCIERROR mciSendStringW(LPCWSTR,LPWSTR,UINT,HWND)': 인수 1을(를) 'const _Elem *'에서 'LPCWSTR'(으)로 변환할 수 없습니다.
+          with
+          [
+              _Elem=char
+          ]
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\CMCI_sound.cpp(70,40): message : 가리킨 형식이 관련이 없습니다. 변환하려면 reinterpret_cast, C 스타일 캐스트 또는 괄호가 있는 함수 스타일 캐스트가 필요합니다.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\mciapi.h(88,1): message : 'mciSendStringW' 선언을 참조하십시오.
+  display_helper.cpp
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(11,11): warning C4244: '초기화 중': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(63,97): warning C4244: '인수': 'double'에서 'GLclampf'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(63,76): warning C4244: '인수': 'double'에서 'GLclampf'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(63,55): warning C4244: '인수': 'double'에서 'GLclampf'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(63,34): warning C4244: '인수': 'double'에서 'GLclampf'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(78,53): warning C4305: '초기화 중': 'double'에서 'GLfloat'(으)로 잘립니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(80,53): warning C4305: '초기화 중': 'double'에서 'GLfloat'(으)로 잘립니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(222,31): warning C4244: '인수': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(223,28): warning C4244: '인수': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(290,32): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(299,90): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(299,59): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(299,28): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(300,90): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(300,59): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(300,28): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(301,90): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(301,59): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(301,28): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(302,90): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(302,59): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(302,28): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(304,90): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(304,59): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(304,28): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(305,90): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(305,59): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(305,28): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(306,90): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(306,59): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(306,28): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(307,90): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(307,59): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(307,28): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(309,90): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(309,59): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(309,28): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(310,90): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(310,59): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(310,28): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(311,90): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(311,59): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(311,28): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(312,90): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(312,59): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(312,28): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(314,90): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(314,59): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(314,28): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(315,90): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(315,59): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(315,28): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(316,90): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(316,59): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(316,28): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(317,90): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(317,59): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(317,28): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(319,90): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(319,59): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(319,28): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(320,90): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(320,59): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(320,28): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(321,90): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(321,59): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(321,28): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(322,90): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(322,59): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(322,28): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(324,90): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(324,59): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(324,28): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(325,90): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(325,59): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(325,28): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(326,90): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(326,59): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(326,28): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(327,90): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(327,59): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\display_helper.cpp(327,28): warning C4244: '인수': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  geometry_helper.cpp
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\geometry_helper.cpp(19,10): warning C4244: '*=': 'double'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=float
+          ]
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\geometry_helper.cpp(20,10): warning C4244: '*=': 'double'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=float
+          ]
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\geometry_helper.cpp(21,10): warning C4244: '*=': 'double'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=float
+          ]
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\geometry_helper.cpp(72,16): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\geometry_helper.cpp(183,44): warning C4244: '=': 'double'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=float
+          ]
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\geometry_helper.cpp(184,44): warning C4244: '=': 'double'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=float
+          ]
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\geometry_helper.cpp(185,44): warning C4244: '=': 'double'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=float
+          ]
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\geometry_helper.cpp(187,44): warning C4244: '=': 'double'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=float
+          ]
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\geometry_helper.cpp(188,44): warning C4244: '=': 'double'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=float
+          ]
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\geometry_helper.cpp(189,44): warning C4244: '=': 'double'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=float
+          ]
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\geometry_helper.cpp(191,44): warning C4244: '=': 'double'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=float
+          ]
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\geometry_helper.cpp(192,44): warning C4244: '=': 'double'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=float
+          ]
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\geometry_helper.cpp(193,44): warning C4244: '=': 'double'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=float
+          ]
+  main.cpp
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\main.cpp(52,55): error C2664: 'int MessageBoxW(HWND,LPCWSTR,LPCWSTR,UINT)': 인수 2을(를) 'char [256]'에서 'LPCWSTR'(으)로 변환할 수 없습니다.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\main.cpp(52,20): message : 가리킨 형식이 관련이 없습니다. 변환하려면 reinterpret_cast, C 스타일 캐스트 또는 괄호가 있는 함수 스타일 캐스트가 필요합니다.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winuser.h(9161,1): message : 'MessageBoxW' 선언을 참조하십시오.
+  phantom_helper.cpp
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\phantom_helper.h(3,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'HD/hd.h': No such file or directory
+  Serial2.cpp
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\Serial2.cpp(8,2): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\JYPlab\Desktop\Object Size Perception (190325)_Vibrotactile\Object Size Perception\src\Serial2.cpp(12,2): warning C4996: 'mbstowcs': This function or variable may be unsafe. Consider using mbstowcs_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
