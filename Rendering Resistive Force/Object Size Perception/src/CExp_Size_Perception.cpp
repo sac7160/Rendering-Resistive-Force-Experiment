@@ -740,22 +740,25 @@ void cExp_Size_Perception::recordResult(int type)
 			last_result.omni_force_change[3],
 
 			time_tm.tm_min, time_tm.tm_sec,
-			/*last_result.mean_coll_depth[0][0] * 1000.0, last_result.mean_coll_depth[0][1] * 1000.0,
-			last_result.max_coll_depth[0][0] * 1000.0, last_result.mean_coll_depth[0][1] * 1000.0,
-			last_result.mean_coll_depth[1][0] * 1000.0, last_result.mean_coll_depth[1][1] * 1000.0,
-			last_result.max_coll_depth[1][0] * 1000.0, last_result.mean_coll_depth[1][1] * 1000.0);*/
+			
 			last_result.omni_force_user_input[0],
 			last_result.omni_force_user_input[1],
 			last_result.omni_force_user_input[2],
 			last_result.omni_force_user_input[3]);
 		pFile = fopen(m_rec_filename, "a");
 		if (pFile != NULL && !m_testSubject) {
-			fprintf(pFile, "%d\t%.1f\t%d\t%02d:%02d\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n", last_result.trial_no,
-				last_result.trial_stimulus * 1000.0, last_result.trial_user_ans, time_tm.tm_min, time_tm.tm_sec,
-				last_result.mean_coll_depth[0][0] * 1000.0, last_result.mean_coll_depth[0][1] * 1000.0,
-				last_result.max_coll_depth[0][0] * 1000.0, last_result.mean_coll_depth[0][1] * 1000.0,
-				last_result.mean_coll_depth[1][0] * 1000.0, last_result.mean_coll_depth[1][1] * 1000.0,
-				last_result.max_coll_depth[1][0] * 1000.0, last_result.mean_coll_depth[1][1] * 1000.0);
+			fprintf(pFile, "%d\t %.1f -> %.1f -> %.1f -> %.1f      \t%02d:%02d   \t\t%d\t%d\t%d\t%d\n", last_result.trial_no,
+				last_result.omni_force_change[0],
+				last_result.omni_force_change[1],
+				last_result.omni_force_change[2],
+				last_result.omni_force_change[3],
+
+				time_tm.tm_min, time_tm.tm_sec,
+
+				last_result.omni_force_user_input[0],
+				last_result.omni_force_user_input[1],
+				last_result.omni_force_user_input[2],
+				last_result.omni_force_user_input[3]);
 			fclose(pFile);
 		}
 	}
@@ -765,23 +768,24 @@ void cExp_Size_Perception::recordResult(int type)
 		tot_time = difftime(curr_time, m_expBeginTime);
 		err = _localtime64_s(&time_tm2, &tot_time);
 		/////
-		printf("===================================\n");
+		printf("==================================================\n");
 		printf("Experiment ended at %02d:%02d:%02d on %04d/%02d/%02d\n", time_tm.tm_hour,
 			time_tm.tm_min, time_tm.tm_sec, time_tm.tm_year + 1900, time_tm.tm_mon + 1, time_tm.tm_mday);
 		printf("Total experiment time: %02d:%02d\n", time_tm2.tm_min, time_tm2.tm_sec);
-		printf("===================================\n");
+		printf("==================================================\n");
 		//printf("object size PSE: %.3f mm\n", m_PSE_obj_size * 1000.0); //	printf("stiffness PSE: %.2f N/mm\n", m_PSE_K);
 		printf("Size of Omni force : %.1f N\n", PHANTOM_TOOLS::get_kStiffness());
-		printf("===================================\n");
+		printf("==================================================\n");
 		pFile = fopen(m_rec_filename, "a");
 		if (pFile != NULL && !m_testSubject) {
-			fprintf(pFile, "===================================\n");
+			fprintf(pFile, "==================================================\n");
 			fprintf(pFile, "Experiment ended at %02d:%02d:%02d on %04d/%02d/%02d\n", time_tm.tm_hour,
 				time_tm.tm_min, time_tm.tm_sec, time_tm.tm_year + 1900, time_tm.tm_mon + 1, time_tm.tm_mday);
 			fprintf(pFile, "Total experiment time: %02d:%02d\n", time_tm2.tm_min, time_tm2.tm_sec);
-			fprintf(pFile, "===================================\n");
-			fprintf(pFile, "object size PSE: %.3f mm\n", m_PSE_obj_size * 1000);//	fprintf(pFile, "stiffness PSE: %.2f N/mm\n", m_PSE_K);
-			fprintf(pFile, "===================================\n");
+			fprintf(pFile, "==================================================\n");
+			//printf("object size PSE: %.3f mm\n", m_PSE_obj_size * 1000.0); //	printf("stiffness PSE: %.2f N/mm\n", m_PSE_K);
+			fprintf(pFile, "Size of Omni force : %.1f N\n", PHANTOM_TOOLS::get_kStiffness());
+			fprintf(pFile, "==================================================\n");
 			fclose(pFile);
 		}
 	}
