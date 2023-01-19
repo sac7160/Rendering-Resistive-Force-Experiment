@@ -20,9 +20,11 @@ namespace PHANTOM_TOOLS
 	void printOutput(double);
 	void change_direction();
 	float get_kStiffness();
+	void set_tip_mass(float);
 	static HDboolean bRenderForce;
 	static HDboolean bool_RighToLeft;
 	static HDdouble kStiffness;
+	static float tip_mass;
 }
 
 HDCallbackCode HDCALLBACK DeviceStateCallback(void* data);

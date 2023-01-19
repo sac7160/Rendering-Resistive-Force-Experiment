@@ -147,6 +147,11 @@ namespace PHANTOM_TOOLS
     {
         return kStiffness;
     }
+
+    void set_tip_mass(float mass)
+    {
+        tip_mass = mass;
+    }
 }
 
 
@@ -220,7 +225,7 @@ HDCallbackCode HDCALLBACK DeviceStateCallback(void* data)
     hduVecScale(force, tmp, tmp_kStiffness);
     
     /// 중력보상
-    float weight = 9.8 * 0.07;
+    float weight = PHANTOM_TOOLS::tip_mass;
     hduVector3Dd y = { 0,weight,0 };
 
     if (position[1] < 0)
