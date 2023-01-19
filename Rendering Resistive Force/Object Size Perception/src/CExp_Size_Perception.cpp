@@ -11,7 +11,7 @@ unsigned __stdcall posCtrlThread(void* arg) { return 0; };
 
 unsigned __stdcall audioThread(void* arg);
 unsigned __stdcall hapticRenderingThread(void* arg);
-HDCallbackCode HDCALLBACK PhantomCallback(void* pUserData);
+
 
 
 #define _DBG_REC
@@ -26,12 +26,12 @@ const char m_instruction_msg[][4][128] = {
 	{{"Follow Square"}, {"To show moving sqaure, hit 'enter'"}},	//TEST_PRE_EXP
 	{{"Trial No. :"}, {"Follow the red rectangle with your finger."}, {"Compare the force felt in the left hand with the force felt in the right hand"}, {"Get Ready to drag. It starts after 3 seconds after pressing the 'Enter'"}},	// EXP_PHASE1
 	{{"Trial No. :"}, {"Follow the red rectangle with your finger."}, {"Compare the force felt in the left hand with the force felt in the right hand"}, {"Get Ready to drag. It starts after 3 seconds after pressing the 'Enter'"}},		// EXP_PHASE2
-	{{"Trial No. :"}, {"Hit 'F8' first"}, {"Hit 'Enter' to move to feel the next stimulus."}},		// EXP_PHASE3
+	{{"Trial No. :"}, {"Change the direction the rectangle moves"}, {"Hit 'F8'"}},		// EXP_PHASE3
 	{{"Trial No. :"}, {"Follow the red rectangle with your finger."}, {"Compare the force felt in the left hand with the force felt in the right hand"}, {"Get Ready to drag. It starts after 3 seconds after pressing the 'Enter'"}},	// EXP_PHASE4
 	{{"Trial No. :"}, {"Follow the red rectangle with your finger."}, {"Compare the force felt in the left hand with the force felt in the right hand"}, {"Get Ready to drag. It starts after 3 seconds after pressing the 'Enter'"}},	// EXP_PHASE5
-	{{"Trial No. :"}, {"Hit 'Enter' to type your answer."}},		// EXP_PHASE6
-	{{"Trial No. :"}, {"Which object was larger? Type your answer and hit 'Enter'"}, {"Your answer (1: 1st object; 2: 2nd object):"}},	//EXP_ANSWER
-	{{"Trial No. :"}, {"Your answer for this trial is that"}, {"Hit 'Enter' to move to the next trial."}},//EXP_ANSWER_CORRECTNESS
+	{{"Trial No. :"}, {"Hit 'Enter' to move next phase."}},		// EXP_PHASE6
+	{{"Trial No. :"}, {"Change the direction the rectangle moves"}, {"Hit 'F8'"}},	//EXP_ANSWER
+	{{"Trial No. :"},  {"Hit 'Enter' to move to the next trial."}},//EXP_ANSWER_CORRECTNESS
 	{{""}, {""}, {""}}, // DATA_ANALYSIS.
 	{{""},},//WRITE_RESULT,
 	{{"Experiment Complete. Thank you for your participation."}}//EXP_DONE,
@@ -81,7 +81,7 @@ cExp_Size_Perception::cExp_Size_Perception() : m_num_devices(0)
 	m_enable_ss = false;
 #endif
 #ifdef _VIB_TEST
-	m_pSerial_vib ;
+	m_pSerial_vib;
 	m_enable_vib = false;
 #endif
 	m_show_dbg_info = false;
@@ -112,6 +112,7 @@ cExp_Size_Perception::cExp_Size_Perception() : m_num_devices(0)
 	tmp = false;
 	square_pos = 0;
 	animation_cnt = 0;
+	direction_changed = false;
 }
 
 cExp_Size_Perception::~cExp_Size_Perception()
@@ -291,7 +292,7 @@ int cExp_Size_Perception::handleKeyboard(unsigned char key, char* ret_string)	//
 					usr_input.push_back(2);
 					force_change.push_back(PHANTOM_TOOLS::get_kStiffness());
 				}
-				 moveToNextPhase();
+				moveToNextPhase();
 			}
 
 		}
@@ -313,14 +314,19 @@ int cExp_Size_Perception::handleKeyboard(unsigned char key, char* ret_string)	//
 				}
 			}
 		}
-		//
-		else if (m_exp_phase == EXP_PHASE::EXP_PHASE3 || m_exp_phase == EXP_PHASE::EXP_PHASE6 ||
+		else if (m_exp_phase == EXP_PHASE::EXP_PHASE3) {
+			if (key == 13)
+			{
+				if (direction_changed) ret = moveToNextPhase(ret_string);
+				else if (!direction_changed) sprintf(ret_string, "Hit 'F8' first!");
+			}
+		}
+		else if (m_exp_phase == EXP_PHASE::EXP_PHASE6 ||
 			m_exp_phase == EXP_PHASE::EXP_ANSWER_CORRECTNESS) {
 			if (key == 13) {
 				moveToNextPhase(ret_string);
 			}
 		}
-		//임시 추가
 		else if (m_exp_phase == EXP_PHASE::EXP_PHASE4 || m_exp_phase == EXP_PHASE::EXP_PHASE5) {
 			if (key == '[' || key == ']')PHANTOM_TOOLS::adjust_force(key);
 			else if (key == 13)
@@ -340,7 +346,7 @@ int cExp_Size_Perception::handleKeyboard(unsigned char key, char* ret_string)	//
 		}
 		//
 		else if (m_exp_phase == EXP_PHASE::EXP_ANSWER) {
-			if (key == 13) {
+			/*if (key == 13) {
 				m_curr_answer = m_txtBuf[0] - '1';
 				if ((m_curr_answer != 0 && m_curr_answer != 1) || m_textBuf_len != 1) {
 					ret = 102;
@@ -366,6 +372,11 @@ int cExp_Size_Perception::handleKeyboard(unsigned char key, char* ret_string)	//
 			else {
 				ret = 102;
 				sprintf(ret_string, "Type a valid anwer (1 or 2)");
+			}*/
+			if (key == 13)
+			{
+				if (direction_changed) ret = moveToNextPhase(ret_string);
+				else if (!direction_changed) sprintf(ret_string, "Hit 'F8' first!");
 			}
 		}
 	}
@@ -544,6 +555,7 @@ int cExp_Size_Perception::moveToNextPhase(char* ret_string)
 			m_cnt_collision_depth[i] = 0;
 			m_sum_collision_depth[i] = 0.0;
 		}
+		direction_changed = false;
 		m_exp_phase = EXP_PHASE::EXP_PHASE4;
 	}
 	else if (m_exp_phase == EXP_PHASE::EXP_PHASE4) {
@@ -599,6 +611,7 @@ int cExp_Size_Perception::moveToNextPhase(char* ret_string)
 	else if (m_exp_phase == EXP_PHASE::EXP_ANSWER) {
 		//	enablePositionCtrl(false);
 		//		m_enable_force = false;
+		direction_changed = false;
 		m_exp_phase = EXP_PHASE::EXP_ANSWER_CORRECTNESS;
 	}
 	else if (m_exp_phase == EXP_PHASE::EXP_ANSWER_CORRECTNESS) {
@@ -740,7 +753,7 @@ void cExp_Size_Perception::recordResult(int type)
 			last_result.omni_force_change[3],
 
 			time_tm.tm_min, time_tm.tm_sec,
-			
+
 			last_result.omni_force_user_input[0],
 			last_result.omni_force_user_input[1],
 			last_result.omni_force_user_input[2],
@@ -829,7 +842,8 @@ int cExp_Size_Perception::getCurrInstructionText(char pDestTxt[3][128])
 		/// msg 2
 		if (m_exp_phase == EXP_PHASE::EXP_ANSWER_CORRECTNESS) {
 			int curr_answer = m_txtBuf[0] - '0';
-			sprintf(pDestTxt[1], "%s %s", m_instruction_msg[m_exp_phase][1], (m_curr_answer == 0) ? "'the 1st surface was larger.'" : "'the 2nd surface was larger.'");
+			//sprintf(pDestTxt[1], "%s %s", m_instruction_msg[m_exp_phase][1], (m_curr_answer == 0) ? "'the 1st surface was larger.'" : "'the 2nd surface was larger.'");
+			sprintf(pDestTxt[1], "%s", m_instruction_msg[m_exp_phase][1]);
 		}
 		else {
 			strcpy_s(pDestTxt[1], m_instruction_msg[m_exp_phase][1]);
@@ -837,10 +851,14 @@ int cExp_Size_Perception::getCurrInstructionText(char pDestTxt[3][128])
 		}
 		/// msg 3
 		if (m_exp_phase == EXP_PHASE::EXP_ANSWER) {
-			char pTxt[4];
+			char pTxt[50];
 			sprintf(pDestTxt[2], "%s", m_instruction_msg[m_exp_phase][2]);
-			if (m_textBuf_len == 1) {
+			/*if (m_textBuf_len == 1) {
 				sprintf(pTxt, "%d", (int)(m_txtBuf[0] - '0'));
+				strcat(pDestTxt[2], pTxt);
+			}*/
+			if (direction_changed) {
+				sprintf(pTxt," direction changed! Hit 'Enter'");
 				strcat(pDestTxt[2], pTxt);
 			}
 		}
@@ -866,6 +884,19 @@ int cExp_Size_Perception::getCurrInstructionText(char pDestTxt[3][128])
 		strcpy_s(pDestTxt[3], m_instruction_msg[m_exp_phase][3]);
 		pDestTxt[3][len[3]] = NULL;
 		//	}
+		if (m_exp_phase == EXP_PHASE::EXP_PHASE3)
+		{
+			char pTxt[50];
+			sprintf(pDestTxt[2], "%s", m_instruction_msg[m_exp_phase][2]);
+			/*if (m_textBuf_len == 1) {
+				sprintf(pTxt, "%d", (int)(m_txtBuf[0] - '0'));
+				strcat(pDestTxt[2], pTxt);
+			}*/
+			if (direction_changed) {
+				sprintf(pTxt, " direction changed! Hit 'Enter'");
+				strcat(pDestTxt[2], pTxt);
+			}
+		}
 	}
 	return ret;
 }
@@ -986,8 +1017,7 @@ void cExp_Size_Perception::handleSpecialKeys(int key, int x, int y)
 	case GLUT_KEY_F8:
 		PHANTOM_TOOLS::change_direction();
 		printf("방향 바꿈");
-		
-
+		if (!direction_changed) direction_changed = true;
 	}
 }
 /*
@@ -1074,27 +1104,13 @@ int cExp_Size_Perception::calcContact2(glm::vec3 contact_force[2], int contact_s
 
 void cExp_Size_Perception::init()
 {
-	////826 DAQ board initialization
-
-
 	///// Threads initialization;
 	//_beginthreadex(NULL, 0, NULL, (void*)this, 0, NULL);
 	//_beginthreadex(NULL, 0, posCtrlThread, (void*)this, 0, NULL);
 	_beginthreadex(NULL, 0, audioThread, (void*)this, 0, NULL);
 	///// PHANToM initialization
 	PHANTOM_TOOLS::initHD();
-	//m_num_devices = PHANTOM_TOOLS::addDevice((char*)"Default Device", PHANTOM_TOOLS::TYPE::OMNI_GRIPPER, 0.0583);//0.0583);//0.0533);//0.01244);//0.0522);//PHANTOM_TOOLS::TYPE::CUSTOM);
-	//m_num_devices = PHANTOM_TOOLS::addDevice((char*)"Touch2", PHANTOM_TOOLS::TYPE::OMNI_GRIPPER, 0.0583);//0.0583);//0.0533);//0.01244);//0.0522);	//PHANTOM_TOOLS::addDevice("Default Device", PHANTOM_TOOLS::TYPE::CUSTOM);
-	/*PHANTOM_TOOLS::initDevice(PhantomCallback, this);
-	PHANTOM_TOOLS::setOffset(0, glm::vec3(0.08452+0.006, 0, 0), glm::vec3(0, 0, 0));
-	PHANTOM_TOOLS::setOffset(1, glm::vec3(-0.08452-0.006, 0, 0), glm::vec3(0, 0, 0));
-//	PHANTOM_TOOLS::setOffset(0, glm::vec3(0.08452+0.006, 0, 0), glm::vec3(0, 0, 0));
-//	PHANTOM_TOOLS::setOffset(1, glm::vec3(-0.08452-0.006, 0, 0), glm::vec3(0, 0, 0));
-	_beginthreadex(NULL, 0, hapticRenderingThread, (void*)this, 0, NULL);
-	*/
-	///// fingertip surface computation
-//	m_sphere_center_l[0] = glm::vec3(-m_dp_sphr_radius * cos(65.0*DTOR), 0, 0.01303 - m_sphr_radius * sin(65.0*DTOR));
-//	m_sphere_center_l[1] = glm::vec3(m_dp_sphr_radius*cos(65.0*DTOR), 0, 0.01303 - m_sphr_radius * sin(65.0*DTOR));
+
 	m_sphere_center_l[0] = glm::vec3(0.1912 - m_sphr_radius * sin(65.0 * DTOR), 0, 0.01409 - m_sphr_radius * cos(65.0 * DTOR));//glm::vec3(m_sphr_radius*cos(65.0*DTOR), 0, 0.02144 - m_sphr_radius*sin(65.5*DTOR));
 	m_sphere_center_l[1] = glm::vec3(-0.01912 + m_sphr_radius * sin(65.0 * DTOR), 0, 0.01102 - m_sphr_radius * cos(65.0 * DTOR));//glm::vec3(-m_sphr_radius*cos(65.0*DTOR), 0, 0.01899 - m_sphr_radius*sin(65.0*DTOR));
 	m_dp_sphere_center_l[0] = glm::vec3(0.01912 - m_dp_sphr_radius * sin(65.0 * DTOR), 0, 0.01409 - m_dp_sphr_radius * cos(65.0 * DTOR));;

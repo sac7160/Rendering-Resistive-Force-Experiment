@@ -73,7 +73,7 @@ public:
 	// METHODS:
 	//-----------------------------------------------------------------------
 	virtual int handleKeyboard(unsigned char key, char* ret_string);	// pure virtual functions
-	virtual int moveToNextPhase(char *ret_string = NULL);
+	virtual int moveToNextPhase(char* ret_string = NULL);
 	virtual void dataAnalysis();
 	virtual void recordResult(int type);
 	virtual int getCurrInstructionText(char pDestTxt[3][128]);
@@ -145,6 +145,7 @@ public:
 	vector<int>usr_input;	//결과 저장
 	vector<float>force_change;
 	time_t animation_start, animation_end;
+	bool direction_changed;
 
 #ifdef _SS_TEST
 	bool m_enable_ss;
@@ -153,18 +154,18 @@ public:
 	bool m_enable_vib;
 #endif
 private:
-	c826_DIO_ADC *m_p826;
+	c826_DIO_ADC* m_p826;
 	double m_view_height;
 	char m_txtBuf[65];
 	int m_textBuf_len;
 	char m_rec_filename[128];
 	bool m_disp_mode;
-//	double m_thickness;
+	//	double m_thickness;
 	float m_curr_K;
 	uint m_training_feedback;	// 0: cutaneous+force 1: force only  2: cutaneous only
 	int m_curr_answer;
-	
-	Serial *m_pSerial_ss;
+
+	Serial* m_pSerial_ss;
 	double m_FSR_V[2];
 	double m_border_pos[2];
 	bool m_show_border;

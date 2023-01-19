@@ -6,8 +6,8 @@
 namespace DISP_TOOLS {
 	/// Draws the cartesisn axes
 	void DrawGrid();
-	void DrawArrow(glm::vec3 p0, glm::vec3 direction,  double length, double arrow_radius);
-	void DrawAxes(double axisLength, double arrow_radius=0.5);
+	void DrawArrow(glm::vec3 p0, glm::vec3 direction, double length, double arrow_radius);
+	void DrawAxes(double axisLength, double arrow_radius = 0.5);
 	void DrawCone(glm::vec3 base, glm::vec3 top, double radius);
 	void DrawCylinder(glm::vec3 bottom, glm::vec3 top, double bottom_radius, double top_radius);
 	void DrawCapsule(glm::vec3 bottom, glm::vec3 top, double radius);
@@ -16,7 +16,7 @@ namespace DISP_TOOLS {
 	void DrawCircle(glm::vec3 pos, float circleRadius, bool filled = false);
 	void DrawCuboid(glm::vec3 center_pos, float side_len[3]);
 	void setupGraphicsState();
-	void Draw_Text(char *pTxt, float raster_pos_x, float raster_pos_y, float raster_pos_z, void* font=GLUT_BITMAP_TIMES_ROMAN_24);//GLUT_BITMAP_9_BY_15);
+	void Draw_Text(char* pTxt, float raster_pos_x, float raster_pos_y, float raster_pos_z, void* font = GLUT_BITMAP_TIMES_ROMAN_24);//GLUT_BITMAP_9_BY_15);
 	void reshapeSubFunc(int w, int h);
 	void mouseDownSubFunc(int button, int s, int x, int y);
 	void mouseMoveSubFunc(int x, int y);
@@ -53,7 +53,7 @@ namespace DISP_TOOLS {
 
 	void DrawSquare(int);
 
-	
+
 	//
 };
 
