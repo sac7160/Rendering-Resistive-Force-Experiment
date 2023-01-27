@@ -21,6 +21,11 @@ enum EXP_PHASE {
 	TEST_PRE_EXP,
 	EXP_PHASE1,	// Experiment initilization. 
 	EXP_PHASE2,	// Checks if the contact point is close to the contact surface (not the border).
+	EXP_PHASE_TOUCH,	//Generate Omni_Touch Force
+	EXP_PHASE_TMP1,
+	EXP_PHASE_TMP2,
+	EXP_PHASE_TMP3,
+	EXP_PHASE_TMP4,
 	EXP_PHASE3, // A participants feels the 1st stimulus of current trial.
 	EXP_PHASE4, // Checks if the contact point is over the border
 	EXP_PHASE5, // Checks if the contact point is close to the contact surface (not the border).

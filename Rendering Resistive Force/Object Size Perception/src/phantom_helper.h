@@ -21,6 +21,7 @@ namespace PHANTOM_TOOLS
 	void change_direction();
 	float get_kStiffness();
 	void set_tip_mass(float);
+	void renderForce();
 	static HDboolean bRenderForce;
 	static HDboolean bool_RighToLeft;
 	static HDdouble kStiffness;

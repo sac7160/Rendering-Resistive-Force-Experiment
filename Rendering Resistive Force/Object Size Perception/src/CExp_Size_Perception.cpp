@@ -17,10 +17,15 @@ const char m_instruction_msg[][4][128] = {
 	{{"Follow Square"}, {"To show moving sqaure, hit 'enter'"}},	//TEST_PRE_EXP
 	{{"Trial No. :"}, {"Follow the red rectangle with your finger."}, {"Compare the force felt in the left hand with the force felt in the right hand"}, {"Get Ready to drag. It starts after 3 seconds after pressing the 'Enter'"}},	// EXP_PHASE1
 	{{"Trial No. :"}, {"Follow the red rectangle with your finger."}, {"Compare the force felt in the left hand with the force felt in the right hand"}, {"Get Ready to drag. It starts after 3 seconds after pressing the 'Enter'"}},		// EXP_PHASE2
+	{{"Trial No. :"}, {"Move your hand from left to right."}, {"Remember the force felt in the left hand."},{"Hit 'Enter' to move to next phase."}},	//EXP_PHASE_TOUCH
+	{{"Trial No. :"}, {"Follow the red rectangle with your finger."}, {"Compare the force felt in the left hand in the previous phase with the force felt in the right hand"}, {"Get Ready to drag. It starts after 3 seconds after pressing the 'Enter'"}},		// EXP_PHASE_TMP1
+	{{"Trial No. :"}, {"Follow the red rectangle with your finger."}, {"Compare the force felt in the left hand with the force felt in the right hand"}, {"Get Ready to drag. It starts after 3 seconds after pressing the 'Enter'"}},		// EXP_PHASE_TMP2
+	{{"Trial No. :"}, {"Follow the red rectangle with your finger."}, {"Compare the force felt in the left hand with the force felt in the right hand"}, {"Get Ready to drag. It starts after 3 seconds after pressing the 'Enter'"}},		// EXP_PHASE_TMP3
+	{{"Trial No. :"}, {"Follow the red rectangle with your finger."}, {"Compare the force felt in the left hand with the force felt in the right hand"}, {"Get Ready to drag. It starts after 3 seconds after pressing the 'Enter'"}},		// EXP_PHASE_TMP4
 	{{"Trial No. :"}, {"Change the direction the rectangle moves"}, {"Hit 'F8'"}},		// EXP_PHASE3
 	{{"Trial No. :"}, {"Follow the red rectangle with your finger."}, {"Compare the force felt in the left hand with the force felt in the right hand"}, {"Get Ready to drag. It starts after 3 seconds after pressing the 'Enter'"}},	// EXP_PHASE4
 	{{"Trial No. :"}, {"Follow the red rectangle with your finger."}, {"Compare the force felt in the left hand with the force felt in the right hand"}, {"Get Ready to drag. It starts after 3 seconds after pressing the 'Enter'"}},	// EXP_PHASE5
-	{{"Trial No. :"}, {"Hit 'Enter' to move next phase."}},		// EXP_PHASE6
+	{{"Trial No. :"}, {"Hit 'Enter' to move to next phase."}},		// EXP_PHASE6
 	{{"Trial No. :"}, {"Change the direction the rectangle moves"}, {"Hit 'F8'"}},	//EXP_ANSWER
 	{{"Trial No. :"},  {"Hit 'Enter' to move to the next trial."}},//EXP_ANSWER_CORRECTNESS
 	{{""}, {""}, {""}}, // DATA_ANALYSIS.
@@ -198,7 +203,25 @@ int cExp_Size_Perception::handleKeyboard(unsigned char key, char* ret_string)	//
 			}
 
 		}
-		else if (m_exp_phase == EXP_PHASE::EXP_PHASE1 || m_exp_phase == EXP_PHASE::EXP_PHASE2) {
+		else if (m_exp_phase == EXP_PHASE::EXP_PHASE_TOUCH)
+		{
+		if (key == 13)
+		{
+			//Sleep(3000);
+			moveToNextPhase(ret_string);
+			if (!tmp) {
+				animation_start = clock();
+				square_pos = 0;
+				tmp = true;
+			}
+			else if (tmp) {
+				tmp = false;
+				square_pos = 0;
+				glViewport(0, 0, (GLsizei)1000, (GLsizei)600);//width, height 하드코딩
+			}
+		}
+		}
+		else if (m_exp_phase == EXP_PHASE::EXP_PHASE1 || m_exp_phase == EXP_PHASE::EXP_PHASE2 || m_exp_phase == EXP_PHASE::EXP_PHASE_TMP1 || m_exp_phase == EXP_PHASE::EXP_PHASE_TMP2 || m_exp_phase == EXP_PHASE::EXP_PHASE_TMP3 || m_exp_phase == EXP_PHASE::EXP_PHASE_TMP4) {
 			if (key == 13)
 			{
 				//Sleep(3000);
@@ -235,12 +258,12 @@ int cExp_Size_Perception::handleKeyboard(unsigned char key, char* ret_string)	//
 				//Sleep(3000);
 				moveToNextPhase(ret_string);
 				if (!tmp) {
-					square_pos = 1000;
+					square_pos = 800;
 					tmp = true;
 				}
 				else if (tmp) {
 					tmp = false;
-					square_pos = 1000;
+					square_pos = 800;
 					glViewport(0, 0, (GLsizei)1000, (GLsizei)600);//width, height 하드코딩
 				}
 			}
@@ -319,12 +342,24 @@ int cExp_Size_Perception::moveToNextPhase(char* ret_string)
 			m_exp_phase = EXP_PHASE::EXP_PHASE2;
 		}
 		else if (animation_cnt == 3) {
-			m_exp_phase = EXP_PHASE::EXP_PHASE3;
+			m_exp_phase = EXP_PHASE::EXP_PHASE_TOUCH;
 		}
 		else if (animation_cnt == 4) {
-			m_exp_phase = EXP_PHASE::EXP_PHASE5;
+			m_exp_phase = EXP_PHASE::EXP_PHASE_TMP2;
 		}
 		else if (animation_cnt == 5) {
+			m_exp_phase = EXP_PHASE::EXP_PHASE_TMP3;
+		}
+		else if (animation_cnt == 6) {
+			m_exp_phase = EXP_PHASE::EXP_PHASE_TMP4;
+		}
+		else if (animation_cnt == 7) {
+			m_exp_phase = EXP_PHASE::EXP_PHASE3;
+		}
+		else if (animation_cnt == 8) {
+			m_exp_phase = EXP_PHASE::EXP_PHASE5;
+		}
+		else if (animation_cnt == 9) {
 			m_exp_phase = EXP_PHASE::EXP_PHASE6;
 		}
 	}
@@ -332,6 +367,21 @@ int cExp_Size_Perception::moveToNextPhase(char* ret_string)
 		m_exp_phase = EXP_PHASE::EXP_NULL;
 	}
 	else if (m_exp_phase == EXP_PHASE::EXP_PHASE2) {
+		m_exp_phase = EXP_PHASE::EXP_NULL;
+	}
+	else if (m_exp_phase == EXP_PHASE::EXP_PHASE_TOUCH) {
+		m_exp_phase = EXP_PHASE::EXP_NULL;
+	}
+	else if (m_exp_phase == EXP_PHASE::EXP_PHASE_TMP1) {
+		m_exp_phase = EXP_PHASE::EXP_NULL;
+	}
+	else if (m_exp_phase == EXP_PHASE::EXP_PHASE_TMP2) {
+		m_exp_phase = EXP_PHASE::EXP_NULL;
+	}
+	else if (m_exp_phase == EXP_PHASE::EXP_PHASE_TMP3) {
+		m_exp_phase = EXP_PHASE::EXP_NULL;
+	}
+	else if (m_exp_phase == EXP_PHASE::EXP_PHASE_TMP4) {
 		m_exp_phase = EXP_PHASE::EXP_NULL;
 	}
 	else if (m_exp_phase == EXP_PHASE::EXP_PHASE3) {
@@ -414,20 +464,20 @@ void cExp_Size_Perception::recordResult(int type)
 		
 		printf("Experiment began at %02d:%02d:%02d on %04d/%02d/%02d\n", time_tm.tm_hour, time_tm.tm_min, time_tm.tm_sec,
 			time_tm.tm_year + 1900, time_tm.tm_mon + 1, time_tm.tm_mday);
-		printf("-----------------------------------------------------------------------------------\n");
+		printf("---------------------------------------------------------------------------------------------\n");
 		//printf("Trial no.\tObj size(mm)\tanswer(F object larger:0/F+C object larger:1)]\ttrial time (mm:ss)\tLeft)mean_collision_depth(F+C) (mm)\tmean_collision_depth(F) (mm)\tmax_collision_depth(F+C) (mm)\tmax_collision_depth(F)\tRight)mean_collision_depth(F+C) (mm)\tmean_collision_depth(F) (mm)\tmax_collision_depth(F+C) (mm)\tmax_collision_depth(F)\n");
-		printf("Trial no.\tOmni force(N)\t\ttrial time (mm:ss)\tphase1\tphase2\tphase3\tphase4\n");
-		printf("-----------------------------------------------------------------------------------\n");
+		printf("Trial no.\t\t\tOmni force(N)\t\t\t\ttrial time (mm:ss)\tphase1\tphase2\tphase3\tphase4\tphase5\tphase6\tphase7\tphase8\n");
+		printf("---------------------------------------------------------------------------------------------\n");
 		pFile = fopen(m_rec_filename, "a");
 		if (pFile != NULL && !m_testSubject) {
 			fprintf(pFile, "Subject: %s\n", m_subjectID);
 			fprintf(pFile, "Experiment began at %02d:%02d:%02d on %04d/%02d/%02d\n", time_tm.tm_hour, time_tm.tm_min, time_tm.tm_sec,
 				time_tm.tm_year + 1900, time_tm.tm_mon + 1, time_tm.tm_mday);
-			fprintf(pFile, "----------------------------------------------------------------------------------\n");
+			fprintf(pFile, "--------------------------------------------------------------------------------------------\n");
 			//fprintf(pFile, "Trial no.\tObj size(mm)\tanswer(F object larger:0/F+C object larger:1)]\ttrial time (mm:ss)\tLeft)mean_collision_depth(F+C) (mm)\tmean_collision_depth(F) (mm)\tmax_collision_depth(F+C) (mm)\tmax_collision_depth(F)\tRight)mean_collision_depth(F+C) (mm)\tmean_collision_depth(F) (mm)\tmax_collision_depth(F+C) (mm)\tmax_collision_depth(F)\n");
 			//	"Trial no.\tstiffness(N/mm)\tanswer(kinesthetic surface stiffer:0/cutaneous surface stiffer1)]\ttrial time (mm:ss)\tLeft)mean_collision_depth(F+C) (mm)\tmean_collision_depth(F) (mm)\tmax_collision_depth(F+C) (mm)\tmax_collision_depth(F)\tRight)mean_collision_depth(F+C) (mm)\tmean_collision_depth(F) (mm)\tmax_collision_depth(F+C) (mm)\tmax_collision_depth(F)\n");
-			fprintf(pFile, "Trial no.\tOmni force(N)\t\ttrial time (mm:ss)\tphase1\tphase2\tphase3\tphase4\n");
-			fprintf(pFile, "----------------------------------------------------------------------------------\n");
+			fprintf(pFile, "Trial no.\t\t\tOmni force(N)\t\t\t\ttrial time (mm:ss)\tphase1\tphase2\tphase3\tphase4\tphase5\tphase6\tphase7\tphase8\n");
+			fprintf(pFile, "--------------------------------------------------------------------------------------------\n");
 			fclose(pFile);
 		}
 	}
@@ -435,32 +485,48 @@ void cExp_Size_Perception::recordResult(int type)
 		exp_result last_result = m_expResult.back();
 		tot_time = difftime(last_result.trial_end_time, last_result.trial_begin_time);
 		err = _localtime64_s(&time_tm, &tot_time);
-		printf("%d\t %.1f -> %.1f -> %.1f -> %.1f      \t%02d:%02d   \t\t%d\t%d\t%d\t%d\n", last_result.trial_no,
+		printf("%d\t %.1f -> %.1f -> %.1f -> %.1f -> %.1f -> %.1f -> %.1f -> %.1f      \t%02d:%02d   \t\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n", last_result.trial_no,
 			last_result.omni_force_change[0],
 			last_result.omni_force_change[1],
 			last_result.omni_force_change[2],
 			last_result.omni_force_change[3],
+			last_result.omni_force_change[4],
+			last_result.omni_force_change[5],
+			last_result.omni_force_change[6],
+			last_result.omni_force_change[7],
 
 			time_tm.tm_min, time_tm.tm_sec,
 
 			last_result.omni_force_user_input[0],
 			last_result.omni_force_user_input[1],
 			last_result.omni_force_user_input[2],
-			last_result.omni_force_user_input[3]);
+			last_result.omni_force_user_input[3],
+			last_result.omni_force_user_input[4],
+			last_result.omni_force_user_input[5],
+			last_result.omni_force_user_input[6],
+			last_result.omni_force_user_input[7]);
 		pFile = fopen(m_rec_filename, "a");
 		if (pFile != NULL && !m_testSubject) {
-			fprintf(pFile, "%d\t %.1f -> %.1f -> %.1f -> %.1f      \t%02d:%02d   \t\t%d\t%d\t%d\t%d\n", last_result.trial_no,
+			fprintf(pFile, "%d\t %.1f -> %.1f -> %.1f -> %.1f -> %.1f -> %.1f -> %.1f -> %.1f      \t%02d:%02d   \t\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n", last_result.trial_no,
 				last_result.omni_force_change[0],
 				last_result.omni_force_change[1],
 				last_result.omni_force_change[2],
 				last_result.omni_force_change[3],
+				last_result.omni_force_change[4],
+				last_result.omni_force_change[5],
+				last_result.omni_force_change[6],
+				last_result.omni_force_change[7],
 
 				time_tm.tm_min, time_tm.tm_sec,
 
 				last_result.omni_force_user_input[0],
 				last_result.omni_force_user_input[1],
 				last_result.omni_force_user_input[2],
-				last_result.omni_force_user_input[3]);
+				last_result.omni_force_user_input[3],
+				last_result.omni_force_user_input[4],
+				last_result.omni_force_user_input[5],
+				last_result.omni_force_user_input[6],
+				last_result.omni_force_user_input[7]);
 			fclose(pFile);
 		}
 	}

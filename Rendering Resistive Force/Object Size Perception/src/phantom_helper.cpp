@@ -4,7 +4,7 @@
 
 ///
 #include "SerialClass.h"
-Serial* SP = new Serial("\\\\.\\COM3");
+//Serial* SP = new Serial("\\\\.\\COM3");
 
 
 #define MINUS 72
@@ -49,8 +49,8 @@ namespace PHANTOM_TOOLS
         printf("Found device model: %s / serial number: %s.\n\n",
             hdGetString(HD_DEVICE_MODEL_TYPE), hdGetString(HD_DEVICE_SERIAL_NUMBER));
 
-        kStiffness = 0.4; /* N/mm 이 변수로 N 조절*/
-
+        kStiffness = 0.6; /* N/mm 이 변수로 N 조절*/
+        
         hUpdateDeviceCallback = hdScheduleAsynchronous(
             DeviceStateCallback, 0, HD_MAX_SCHEDULER_PRIORITY);
 
@@ -152,6 +152,10 @@ namespace PHANTOM_TOOLS
     {
         tip_mass = mass;
     }
+    void renderForce()
+    {
+        bRenderForce = HD_TRUE;
+    }
 }
 
 
@@ -169,7 +173,7 @@ HDCallbackCode HDCALLBACK DeviceStateCallback(void* data)
     hduVector3Dd positionTwell;
 
     //임시추가 230111
-    PHANTOM_TOOLS::bRenderForce = HD_FALSE;
+    //PHANTOM_TOOLS::bRenderForce = HD_FALSE;
 
     HHD hHD = hdGetCurrentDevice();
 
@@ -210,12 +214,13 @@ HDCallbackCode HDCALLBACK DeviceStateCallback(void* data)
         if (PHANTOM_TOOLS::bool_RighToLeft)
         {
             tmp_kStiffness = - PHANTOM_TOOLS::kStiffness;
-            SP->WriteData("1", 255);
+            //SP->WriteData("1", 255);
         }
         else
         {
             tmp_kStiffness = PHANTOM_TOOLS::kStiffness;
-            SP->WriteData("0", 255);
+            //SP->WriteData("0", 255);
+            
         }
     }
     else 

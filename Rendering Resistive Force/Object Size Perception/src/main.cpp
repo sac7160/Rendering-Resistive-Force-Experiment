@@ -11,6 +11,8 @@
 
 #define _TITLE "Object Size Perception Experiment"
 
+Serial* SP = new Serial("\\\\.\\COM3");
+
 void keyboard(unsigned char key, int x, int y);
 void display();
 void myInit();
@@ -82,8 +84,13 @@ void idle()
 	glutPostRedisplay();
 	if (m_expObjSize.m_exp_phase == EXP_NULL)
 	{
-		if (m_expObjSize.animation_cnt < 3)
+		if (m_expObjSize.animation_cnt < 7)
 		{
+			if (m_expObjSize.square_pos == 0)
+			{
+				Sleep(3000);
+				m_expObjSize.square_pos += 4;
+			}
 			m_expObjSize.square_pos += 4;
 			/*
 			1000 pixel => 270mm
@@ -91,6 +98,12 @@ void idle()
 			=> 98.396 mm/sec
 			약 100mm/sec
 			*/
+			//0126 수정 - LRA작동 직사각형 위치에 따라 작동하도록 변경
+
+			if (m_expObjSize.square_pos >= 450 && m_expObjSize.square_pos <= 460) SP->WriteData("0", 255);
+
+
+			//
 			if (m_expObjSize.square_pos == 1000)
 			{
 				m_expObjSize.animation_end = clock();
@@ -100,17 +113,23 @@ void idle()
 				//printf("소요시간: %lf\n", (double)(m_expObjSize.animation_end - m_expObjSize.animation_start) / CLOCKS_PER_SEC);
 			}
 		}
-		else if(m_expObjSize.animation_cnt == 3 || m_expObjSize.animation_cnt == 4)
+		else if(m_expObjSize.animation_cnt == 7 || m_expObjSize.animation_cnt == 8)
 		{	
+			if (m_expObjSize.square_pos == 800)
+			{
+				Sleep(3000);
+				m_expObjSize.square_pos -= 4;
+			}
 			m_expObjSize.square_pos -= 4;
+			if (m_expObjSize.square_pos >= 450 && m_expObjSize.square_pos <= 460) SP->WriteData("1", 255);
 			if (m_expObjSize.square_pos == 0)
 			{
 				m_expObjSize.tmp = false;
-				m_expObjSize.square_pos = 1000;
+				m_expObjSize.square_pos = 800;
 				m_expObjSize.moveToNextPhase();
 			}
 		}
-		else if (m_expObjSize.animation_cnt == 5)m_expObjSize.animation_cnt = 1;
+		else if (m_expObjSize.animation_cnt == 9)m_expObjSize.animation_cnt = 1;
 		
 	}
 
