@@ -18,17 +18,11 @@ enum EXP_PHASE {
 	INFO_INPUT,
 	TRAINING_PHASE1,	// Check if the contact point is over the border
 	TRAINING_PHASE2,	// Training instruction
-	TEST_PRE_EXP,
-	EXP_PHASE1,	// Experiment initilization. 
-	EXP_PHASE2,	// Checks if the contact point is close to the contact surface (not the border).
+	TEST_PRE_EXP, 
 	EXP_PHASE_TOUCH,	//Generate Omni_Touch Force
-	EXP_PHASE_TMP1,
-	EXP_PHASE_TMP2,
-	EXP_PHASE_TMP3,
-	EXP_PHASE_TMP4,
 	EXP_PHASE3, // A participants feels the 1st stimulus of current trial.
-	EXP_PHASE4, // Checks if the contact point is over the border
-	EXP_PHASE5, // Checks if the contact point is close to the contact surface (not the border).
+	EXP_PHASE4, 
+	EXP_PHASE5,
 	EXP_PHASE6,	//  A participants feels the 2nd stimulus of current trial. 
 	EXP_ANSWER,	//  Type your answer and hit 'Enter' (0: first stimulus was larger, 1: second stimulus was larger)
 	EXP_ANSWER_CORRECTNESS,	// Your answer for this trial is.... Hit 'Enter' to move to the next trial.

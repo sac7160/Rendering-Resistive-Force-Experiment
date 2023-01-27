@@ -15,13 +15,7 @@ const char m_instruction_msg[][4][128] = {
 	{{"Drag two fingers of your right hand along the moving red rectangle on the touch screen"}, {"Press 'n' to go to the next page"}},	// TRAINING_PHASE1
 	{{"Training session2"}, {"If the force you feel in your right hand is greater than the force you feel in your left hand, press ']' "}, {"if(right hand < left hand) press '['"}, {"Press 'e' to go to the next page "}},		// TRAINING PHASE2
 	{{"Follow Square"}, {"To show moving sqaure, hit 'enter'"}},	//TEST_PRE_EXP
-	{{"Trial No. :"}, {"Follow the red rectangle with your finger."}, {"Compare the force felt in the left hand with the force felt in the right hand"}, {"Get Ready to drag. It starts after 3 seconds after pressing the 'Enter'"}},	// EXP_PHASE1
-	{{"Trial No. :"}, {"Follow the red rectangle with your finger."}, {"Compare the force felt in the left hand with the force felt in the right hand"}, {"Get Ready to drag. It starts after 3 seconds after pressing the 'Enter'"}},		// EXP_PHASE2
-	{{"Trial No. :"}, {"Move your hand from left to right."}, {"Remember the force felt in the left hand."},{"Hit 'Enter' to move to next phase."}},	//EXP_PHASE_TOUCH
-	{{"Trial No. :"}, {"Follow the red rectangle with your finger."}, {"Compare the force felt in the left hand in the previous phase with the force felt in the right hand"}, {"Get Ready to drag. It starts after 3 seconds after pressing the 'Enter'"}},		// EXP_PHASE_TMP1
-	{{"Trial No. :"}, {"Follow the red rectangle with your finger."}, {"Compare the force felt in the left hand with the force felt in the right hand"}, {"Get Ready to drag. It starts after 3 seconds after pressing the 'Enter'"}},		// EXP_PHASE_TMP2
-	{{"Trial No. :"}, {"Follow the red rectangle with your finger."}, {"Compare the force felt in the left hand with the force felt in the right hand"}, {"Get Ready to drag. It starts after 3 seconds after pressing the 'Enter'"}},		// EXP_PHASE_TMP3
-	{{"Trial No. :"}, {"Follow the red rectangle with your finger."}, {"Compare the force felt in the left hand with the force felt in the right hand"}, {"Get Ready to drag. It starts after 3 seconds after pressing the 'Enter'"}},		// EXP_PHASE_TMP4
+	{{"Trial No. :"}, {"Move your left hand from left to right. Remember the force felt in the left hand."}, {"In the next phase, Follow the red rectangle with your right hand. "},{"It starts after 3 seconds after pressing the 'Enter'"}},	//EXP_PHASE_TOUCH
 	{{"Trial No. :"}, {"Change the direction the rectangle moves"}, {"Hit 'F8'"}},		// EXP_PHASE3
 	{{"Trial No. :"}, {"Follow the red rectangle with your finger."}, {"Compare the force felt in the left hand with the force felt in the right hand"}, {"Get Ready to drag. It starts after 3 seconds after pressing the 'Enter'"}},	// EXP_PHASE4
 	{{"Trial No. :"}, {"Follow the red rectangle with your finger."}, {"Compare the force felt in the left hand with the force felt in the right hand"}, {"Get Ready to drag. It starts after 3 seconds after pressing the 'Enter'"}},	// EXP_PHASE5
@@ -221,23 +215,7 @@ int cExp_Size_Perception::handleKeyboard(unsigned char key, char* ret_string)	//
 			}
 		}
 		}
-		else if (m_exp_phase == EXP_PHASE::EXP_PHASE1 || m_exp_phase == EXP_PHASE::EXP_PHASE2 || m_exp_phase == EXP_PHASE::EXP_PHASE_TMP1 || m_exp_phase == EXP_PHASE::EXP_PHASE_TMP2 || m_exp_phase == EXP_PHASE::EXP_PHASE_TMP3 || m_exp_phase == EXP_PHASE::EXP_PHASE_TMP4) {
-			if (key == 13)
-			{
-				//Sleep(3000);
-				moveToNextPhase(ret_string);
-				if (!tmp) {
-					animation_start = clock();
-					square_pos = 0;
-					tmp = true;
-				}
-				else if (tmp) {
-					tmp = false;
-					square_pos = 0;
-					glViewport(0, 0, (GLsizei)1000, (GLsizei)600);//width, height 하드코딩
-				}
-			}
-		}
+		
 		else if (m_exp_phase == EXP_PHASE::EXP_PHASE3) {
 			if (key == 13)
 			{
@@ -334,24 +312,12 @@ int cExp_Size_Perception::moveToNextPhase(char* ret_string)
 	{
 		glViewport(0, 0, (GLsizei)1000, (GLsizei)600);//width, height 하드코딩
 		animation_cnt++;
-		if (animation_cnt == 1) m_exp_phase = EXP_PHASE::EXP_PHASE1;
+		if (animation_cnt == 1) m_exp_phase = EXP_PHASE::EXP_PHASE_TOUCH;
 		else m_exp_phase = EXP_PHASE::GET_ANSWER;
 	}
 	else if (m_exp_phase == EXP_PHASE::GET_ANSWER) {
-		if (animation_cnt == 2) {
-			m_exp_phase = EXP_PHASE::EXP_PHASE2;
-		}
-		else if (animation_cnt == 3) {
+		if (animation_cnt >= 2 && animation_cnt <= 6) {
 			m_exp_phase = EXP_PHASE::EXP_PHASE_TOUCH;
-		}
-		else if (animation_cnt == 4) {
-			m_exp_phase = EXP_PHASE::EXP_PHASE_TMP2;
-		}
-		else if (animation_cnt == 5) {
-			m_exp_phase = EXP_PHASE::EXP_PHASE_TMP3;
-		}
-		else if (animation_cnt == 6) {
-			m_exp_phase = EXP_PHASE::EXP_PHASE_TMP4;
 		}
 		else if (animation_cnt == 7) {
 			m_exp_phase = EXP_PHASE::EXP_PHASE3;
@@ -363,25 +329,7 @@ int cExp_Size_Perception::moveToNextPhase(char* ret_string)
 			m_exp_phase = EXP_PHASE::EXP_PHASE6;
 		}
 	}
-	else if (m_exp_phase == EXP_PHASE::EXP_PHASE1) {
-		m_exp_phase = EXP_PHASE::EXP_NULL;
-	}
-	else if (m_exp_phase == EXP_PHASE::EXP_PHASE2) {
-		m_exp_phase = EXP_PHASE::EXP_NULL;
-	}
 	else if (m_exp_phase == EXP_PHASE::EXP_PHASE_TOUCH) {
-		m_exp_phase = EXP_PHASE::EXP_NULL;
-	}
-	else if (m_exp_phase == EXP_PHASE::EXP_PHASE_TMP1) {
-		m_exp_phase = EXP_PHASE::EXP_NULL;
-	}
-	else if (m_exp_phase == EXP_PHASE::EXP_PHASE_TMP2) {
-		m_exp_phase = EXP_PHASE::EXP_NULL;
-	}
-	else if (m_exp_phase == EXP_PHASE::EXP_PHASE_TMP3) {
-		m_exp_phase = EXP_PHASE::EXP_NULL;
-	}
-	else if (m_exp_phase == EXP_PHASE::EXP_PHASE_TMP4) {
 		m_exp_phase = EXP_PHASE::EXP_NULL;
 	}
 	else if (m_exp_phase == EXP_PHASE::EXP_PHASE3) {
@@ -436,7 +384,7 @@ int cExp_Size_Perception::moveToNextPhase(char* ret_string)
 			m_curr_trial_no++;
 			time(&m_trialBeginTime);
 			setAudioPhase(AUDIO_PHASE::PLAY);
-			m_exp_phase = EXP_PHASE::EXP_PHASE1;
+			m_exp_phase = EXP_PHASE::EXP_PHASE_TOUCH;
 		}
 		else {
 			m_exp_phase = EXP_PHASE::DATA_ANALYSIS;
@@ -578,7 +526,7 @@ int cExp_Size_Perception::getCurrInstructionText(char pDestTxt[3][128])
 		else if (m_exp_phase == EXP_PHASE::TEST_PRE_EXP) {
 			sprintf_s(pDestTxt[0], "%s %s", m_instruction_msg[m_exp_phase][0], m_txtBuf);
 		}
-		else if (m_exp_phase >= EXP_PHASE::EXP_PHASE1 && m_exp_phase <= EXP_PHASE::EXP_ANSWER_CORRECTNESS) {
+		else if (m_exp_phase >= EXP_PHASE::EXP_PHASE_TOUCH && m_exp_phase <= EXP_PHASE::EXP_ANSWER_CORRECTNESS) {
 			sprintf_s(pDestTxt[0], "%s %d", m_instruction_msg[m_exp_phase][0], m_curr_trial_no);
 		}
 		else if (m_exp_phase == EXP_PHASE::TRAINING_PHASE2) {
