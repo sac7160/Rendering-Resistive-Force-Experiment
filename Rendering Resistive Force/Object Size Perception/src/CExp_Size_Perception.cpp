@@ -3,19 +3,22 @@
 #include "phantom_helper.h"
 #include "display_helper.h"
 
+#include <random>
+
 unsigned __stdcall audioThread(void* arg);
 
 #define _DBG_REC
 const char m_instruction_msg[][4][128] = {
 	{{"Insert your insert your index finger and middle finger inside the omni."}, {"Then hit 'Enter' to initialize the experimental setup."}},	//INIT
-	{{""}},	//EXP_NULL
+	{{""}},	//EXP_PHASE_LRA
 	{{"Which force was greater?"},{"left hand : Press '['"},{"right hand : Press ']'"}},	//GET_ANSWER
 	{{"Intializing the contact position..."}}, // DEVICE_INIT 
 	{{"subject ID:"}, {"Type subject ID and hit 'Enter' to begin training session."}, {""}}, // INFO_INPUT
 	{{"Drag two fingers of your right hand along the moving red rectangle on the touch screen"}, {"Press 'n' to go to the next page"}},	// TRAINING_PHASE1
 	{{"Training session2"}, {"If the force you feel in your right hand is greater than the force you feel in your left hand, press ']' "}, {"if(right hand < left hand) press '['"}, {"Press 'e' to go to the next page "}},		// TRAINING PHASE2
 	{{"Follow Square"}, {"To show moving sqaure, hit 'enter'"}},	//TEST_PRE_EXP
-	{{"Trial No. :"}, {"Move your left hand from left to right. Remember the force felt in the left hand."}, {"In the next phase, Follow the red rectangle with your right hand. "},{"It starts after 3 seconds after pressing the 'Enter'"}},	//EXP_PHASE_TOUCH
+	{{"Trial No. :"} ,{}},	//EXP_PHASE_PRE_EXP
+	{{"Trial No. :"}, {"Move your left hand from left to right."}},	//EXP_PHASE_TOUCH
 	{{"Trial No. :"}, {"Change the direction the rectangle moves"}, {"Hit 'F8'"}},		// EXP_PHASE3
 	{{"Trial No. :"}, {"Follow the red rectangle with your finger."}, {"Compare the force felt in the left hand with the force felt in the right hand"}, {"Get Ready to drag. It starts after 3 seconds after pressing the 'Enter'"}},	// EXP_PHASE4
 	{{"Trial No. :"}, {"Follow the red rectangle with your finger."}, {"Compare the force felt in the left hand with the force felt in the right hand"}, {"Get Ready to drag. It starts after 3 seconds after pressing the 'Enter'"}},	// EXP_PHASE5
@@ -46,22 +49,33 @@ cExp_Size_Perception::cExp_Size_Perception() : m_num_devices(0)
 	m_textBuf_len = 0;
 	m_tip_mass = 9.8 * 0.07;
 	PHANTOM_TOOLS::set_tip_mass(m_tip_mass);
-	
+
 #ifdef _SS_TEST
 	m_enable_ss = false;
 #endif
 #ifdef _VIB_TEST
 	m_enable_vib = false;
 #endif
-	
+
 	tmp = false;
 	square_pos = 0;
 	animation_cnt = 0;
 	direction_changed = false;
+	lra_first = false;
 }
 
 cExp_Size_Perception::~cExp_Size_Perception()
 {
+}
+
+int cExp_Size_Perception::gen_random_num()
+{
+	random_device rd;
+	mt19937 gen(rd());
+	uniform_int_distribution<int> dis(0, 1);
+	int ret = dis(gen);
+	cout << ret;
+	return ret;
 }
 
 int cExp_Size_Perception::handleKeyboard(unsigned char key, char* ret_string)	// pure virtual functions
@@ -143,7 +157,7 @@ int cExp_Size_Perception::handleKeyboard(unsigned char key, char* ret_string)	//
 		}
 		else if (m_exp_phase == EXP_PHASE::TRAINING_PHASE2) {
 			if (key == 'f' || key == 'F') {
-				 initTrainingPhase(0);
+				initTrainingPhase(0);
 			}
 			else if (key == 'e' || key == 'E') {
 				ret = moveToNextPhase(ret_string);
@@ -157,27 +171,32 @@ int cExp_Size_Perception::handleKeyboard(unsigned char key, char* ret_string)	//
 					tmp = true;
 					animation_start = clock();
 				}
-				else if (tmp) {
+				/*else if (tmp) {
 					tmp = false;
 					square_pos = 0;
 					glViewport(0, 0, (GLsizei)1000, (GLsizei)600);//width, height 하드코딩
-				}
+				}*/
 			}
 		}
-		else if (m_exp_phase == EXP_PHASE::EXP_NULL)
-		{
-			if (key == 13) {
-				if (!tmp) {
-					square_pos = 0;
-					tmp = true;
+		else if (m_exp_phase == EXP_PHASE::EXP_PHASE_PRE_EXP) {
+			if (key == 13)
+			{
+				if (lra_first)
+				{
+					if (!tmp) {
+						animation_start = clock();
+						square_pos = 0;
+						tmp = true;
+					}
+					else if (tmp) {
+						tmp = false;
+						square_pos = 0;
+						glViewport(0, 0, (GLsizei)1000, (GLsizei)600);//width, height 하드코딩
+					}
 				}
-				else if (tmp) {
-					tmp = false;
-					square_pos = 0;
-					glViewport(0, 0, (GLsizei)1000, (GLsizei)600);//width, height 하드코딩
-					moveToNextPhase(ret_string);
-				}
+				ret = moveToNextPhase(ret_string);
 			}
+			
 		}
 		else if (m_exp_phase == EXP_PHASE::GET_ANSWER)
 		{
@@ -199,23 +218,25 @@ int cExp_Size_Perception::handleKeyboard(unsigned char key, char* ret_string)	//
 		}
 		else if (m_exp_phase == EXP_PHASE::EXP_PHASE_TOUCH)
 		{
-		if (key == 13)
-		{
-			//Sleep(3000);
-			moveToNextPhase(ret_string);
-			if (!tmp) {
-				animation_start = clock();
-				square_pos = 0;
-				tmp = true;
-			}
-			else if (tmp) {
-				tmp = false;
-				square_pos = 0;
-				glViewport(0, 0, (GLsizei)1000, (GLsizei)600);//width, height 하드코딩
+			if (key == 13)
+			{
+				//Sleep(3000);
+				moveToNextPhase(ret_string);
+				if (!lra_first)
+				{
+					if (!tmp) {
+						animation_start = clock();
+						square_pos = 0;
+						tmp = true;
+					}
+					else if (tmp) {
+						tmp = false;
+						square_pos = 0;
+						glViewport(0, 0, (GLsizei)1000, (GLsizei)600);//width, height 하드코딩
+					}
+				}
 			}
 		}
-		}
-		
 		else if (m_exp_phase == EXP_PHASE::EXP_PHASE3) {
 			if (key == 13)
 			{
@@ -275,11 +296,11 @@ int cExp_Size_Perception::moveToNextPhase(char* ret_string)
 		m_exp_phase = EXP_PHASE::INFO_INPUT;
 	}
 	else if (m_exp_phase == EXP_PHASE::DEVICE_INIT) {
-		
+
 		m_exp_phase = EXP_PHASE::INFO_INPUT;
 	}
 	else if (m_exp_phase == EXP_PHASE::INFO_INPUT) {
-	
+
 #ifdef _SS_TEST
 		m_enable_ss = false;
 #endif
@@ -289,13 +310,13 @@ int cExp_Size_Perception::moveToNextPhase(char* ret_string)
 		m_exp_phase = EXP_PHASE::TRAINING_PHASE1;
 	}
 	else if (m_exp_phase == EXP_PHASE::TRAINING_PHASE1) {
-	
+
 		m_exp_phase = EXP_PHASE::TRAINING_PHASE2;
 	}
 	else if (m_exp_phase == EXP_PHASE::TRAINING_PHASE2) {
 		m_curr_trial_no = 1;
 		setAudioPhase(AUDIO_PHASE::PLAY);
-	
+
 		m_expResult.clear();
 		time(&m_expBeginTime);
 		time(&m_trialBeginTime);
@@ -306,19 +327,34 @@ int cExp_Size_Perception::moveToNextPhase(char* ret_string)
 	else if (m_exp_phase == EXP_PHASE::TEST_PRE_EXP) {
 		//Sleep(100);
 		//tmp = true;
-		m_exp_phase = EXP_PHASE::EXP_NULL;
+		m_exp_phase = EXP_PHASE::EXP_PHASE_LRA;
 	}
-	else if (m_exp_phase == EXP_PHASE::EXP_NULL)
+	else if (m_exp_phase == EXP_PHASE::EXP_PHASE_PRE_EXP)
+	{
+		if (lra_first == true) m_exp_phase = EXP_PHASE::EXP_PHASE_LRA;
+		else if (lra_first == false) m_exp_phase = EXP_PHASE::EXP_PHASE_TOUCH;
+	}
+	else if (m_exp_phase == EXP_PHASE::EXP_PHASE_LRA)
 	{
 		glViewport(0, 0, (GLsizei)1000, (GLsizei)600);//width, height 하드코딩
 		animation_cnt++;
-		if (animation_cnt == 1) m_exp_phase = EXP_PHASE::EXP_PHASE_TOUCH;
-		else m_exp_phase = EXP_PHASE::GET_ANSWER;
+
+
+		//////////////////////////////////////////////////////////////////////////////////////////
+		if (animation_cnt == 1) m_exp_phase = EXP_PHASE::EXP_PHASE_PRE_EXP;
+		else if (lra_first == false) m_exp_phase = EXP_PHASE::GET_ANSWER;
+		else if (lra_first == true) m_exp_phase = EXP_PHASE::EXP_PHASE_TOUCH;
+		//////////////////////////////////////////////////////////////////////////////////////////
 	}
 	else if (m_exp_phase == EXP_PHASE::GET_ANSWER) {
+		//////////////////////////////////////////////////////////////////////////////////////////
+		if (gen_random_num() == 0) lra_first = false;
+		else lra_first = true;
+
 		if (animation_cnt >= 2 && animation_cnt <= 6) {
-			m_exp_phase = EXP_PHASE::EXP_PHASE_TOUCH;
+			m_exp_phase = EXP_PHASE::EXP_PHASE_PRE_EXP;
 		}
+		//////////////////////////////////////////////////////////////////////////////////////////
 		else if (animation_cnt == 7) {
 			m_exp_phase = EXP_PHASE::EXP_PHASE3;
 		}
@@ -330,17 +366,18 @@ int cExp_Size_Perception::moveToNextPhase(char* ret_string)
 		}
 	}
 	else if (m_exp_phase == EXP_PHASE::EXP_PHASE_TOUCH) {
-		m_exp_phase = EXP_PHASE::EXP_NULL;
+		if (lra_first == false) m_exp_phase = EXP_PHASE::EXP_PHASE_LRA;
+		else if (lra_first == true) m_exp_phase = EXP_PHASE::GET_ANSWER;
 	}
 	else if (m_exp_phase == EXP_PHASE::EXP_PHASE3) {
 		direction_changed = false;
 		m_exp_phase = EXP_PHASE::EXP_PHASE4;
 	}
 	else if (m_exp_phase == EXP_PHASE::EXP_PHASE4) {
-		m_exp_phase = EXP_PHASE::EXP_NULL;
+		m_exp_phase = EXP_PHASE::EXP_PHASE_LRA;
 	}
 	else if (m_exp_phase == EXP_PHASE::EXP_PHASE5) {
-		m_exp_phase = EXP_PHASE::EXP_NULL;
+		m_exp_phase = EXP_PHASE::EXP_PHASE_LRA;
 	}
 	else if (m_exp_phase == EXP_PHASE::EXP_PHASE6) {
 #ifdef _SS_TEST
@@ -355,14 +392,14 @@ int cExp_Size_Perception::moveToNextPhase(char* ret_string)
 	}
 	else if (m_exp_phase == EXP_PHASE::EXP_ANSWER) {
 		//	enablePositionCtrl(false);
-	
+
 		direction_changed = false;
 		m_exp_phase = EXP_PHASE::EXP_ANSWER_CORRECTNESS;
 	}
 	else if (m_exp_phase == EXP_PHASE::EXP_ANSWER_CORRECTNESS) {
 		double next_stimulus;
 		int input_answer;
-		
+
 		/// recording trial result
 	//	if(!m_testSubject) {
 		exp_result curr_result;
@@ -376,9 +413,9 @@ int cExp_Size_Perception::moveToNextPhase(char* ret_string)
 		force_change.clear();
 		usr_input.clear();
 		m_expResult.push_back(curr_result);
-		
+
 		recordResult(RECORD_TYPE::REC_TRIAL);
-		
+
 		ret = calcForce_tmp();
 		if (ret == 0) {
 			m_curr_trial_no++;
@@ -409,12 +446,12 @@ void cExp_Size_Perception::recordResult(int type)
 	if (type == RECORD_TYPE::REC_INIT) {
 		err = _localtime64_s(&time_tm, &m_expBeginTime);//	err = _localtime64_s(&time_tm, &curr_time);
 		printf("Subject: %s\n", m_subjectID);
-		
+
 		printf("Experiment began at %02d:%02d:%02d on %04d/%02d/%02d\n", time_tm.tm_hour, time_tm.tm_min, time_tm.tm_sec,
 			time_tm.tm_year + 1900, time_tm.tm_mon + 1, time_tm.tm_mday);
 		printf("---------------------------------------------------------------------------------------------\n");
 		//printf("Trial no.\tObj size(mm)\tanswer(F object larger:0/F+C object larger:1)]\ttrial time (mm:ss)\tLeft)mean_collision_depth(F+C) (mm)\tmean_collision_depth(F) (mm)\tmax_collision_depth(F+C) (mm)\tmax_collision_depth(F)\tRight)mean_collision_depth(F+C) (mm)\tmean_collision_depth(F) (mm)\tmax_collision_depth(F+C) (mm)\tmax_collision_depth(F)\n");
-		printf("Trial no.\t\t\tOmni force(N)\t\t\t\ttrial time (mm:ss)\tphase1\tphase2\tphase3\tphase4\tphase5\tphase6\tphase7\tphase8\n");
+		printf("Trial no.\t\t\tOmni force(N)\t\t\ttrial time (mm:ss)\tphase1\tphase2\tphase3\tphase4\tphase5\tphase6\tphase7\tphase8\n");
 		printf("---------------------------------------------------------------------------------------------\n");
 		pFile = fopen(m_rec_filename, "a");
 		if (pFile != NULL && !m_testSubject) {
@@ -424,7 +461,7 @@ void cExp_Size_Perception::recordResult(int type)
 			fprintf(pFile, "--------------------------------------------------------------------------------------------\n");
 			//fprintf(pFile, "Trial no.\tObj size(mm)\tanswer(F object larger:0/F+C object larger:1)]\ttrial time (mm:ss)\tLeft)mean_collision_depth(F+C) (mm)\tmean_collision_depth(F) (mm)\tmax_collision_depth(F+C) (mm)\tmax_collision_depth(F)\tRight)mean_collision_depth(F+C) (mm)\tmean_collision_depth(F) (mm)\tmax_collision_depth(F+C) (mm)\tmax_collision_depth(F)\n");
 			//	"Trial no.\tstiffness(N/mm)\tanswer(kinesthetic surface stiffer:0/cutaneous surface stiffer1)]\ttrial time (mm:ss)\tLeft)mean_collision_depth(F+C) (mm)\tmean_collision_depth(F) (mm)\tmax_collision_depth(F+C) (mm)\tmax_collision_depth(F)\tRight)mean_collision_depth(F+C) (mm)\tmean_collision_depth(F) (mm)\tmax_collision_depth(F+C) (mm)\tmax_collision_depth(F)\n");
-			fprintf(pFile, "Trial no.\t\t\tOmni force(N)\t\t\t\ttrial time (mm:ss)\tphase1\tphase2\tphase3\tphase4\tphase5\tphase6\tphase7\tphase8\n");
+			fprintf(pFile, "Trial no.\t\t\tOmni force(N)\t\t\ttrial time (mm:ss)\tphase1\tphase2\tphase3\tphase4\tphase5\tphase6\tphase7\tphase8\n");
 			fprintf(pFile, "--------------------------------------------------------------------------------------------\n");
 			fclose(pFile);
 		}
@@ -433,7 +470,7 @@ void cExp_Size_Perception::recordResult(int type)
 		exp_result last_result = m_expResult.back();
 		tot_time = difftime(last_result.trial_end_time, last_result.trial_begin_time);
 		err = _localtime64_s(&time_tm, &tot_time);
-		printf("%d\t %.1f -> %.1f -> %.1f -> %.1f -> %.1f -> %.1f -> %.1f -> %.1f      \t%02d:%02d   \t\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n", last_result.trial_no,
+		printf("%d\t %.1f -> %.1f -> %.1f -> %.1f -> %.1f -> %.1f -> %.1f -> %.1f      \t%02d:%02d   \t\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n \t\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n", last_result.trial_no,
 			last_result.omni_force_change[0],
 			last_result.omni_force_change[1],
 			last_result.omni_force_change[2],
@@ -517,7 +554,7 @@ int cExp_Size_Perception::getCurrInstructionText(char pDestTxt[3][128])
 		if (m_exp_phase == EXP_PHASE::INFO_INPUT) {
 			sprintf_s(pDestTxt[0], "%s %s", m_instruction_msg[m_exp_phase][0], m_txtBuf);
 		}
-		else if (m_exp_phase == EXP_PHASE::EXP_NULL) {
+		else if (m_exp_phase == EXP_PHASE::EXP_PHASE_LRA) {
 			sprintf_s(pDestTxt[0], "%s", m_instruction_msg[m_exp_phase][0], m_txtBuf);
 		}
 		else if (m_exp_phase == EXP_PHASE::GET_ANSWER) {
@@ -526,8 +563,31 @@ int cExp_Size_Perception::getCurrInstructionText(char pDestTxt[3][128])
 		else if (m_exp_phase == EXP_PHASE::TEST_PRE_EXP) {
 			sprintf_s(pDestTxt[0], "%s %s", m_instruction_msg[m_exp_phase][0], m_txtBuf);
 		}
+		else if (m_exp_phase == EXP_PHASE::EXP_PHASE_PRE_EXP) {
+			char pTxt[100];
+			sprintf(pDestTxt[0], "%s %d", m_instruction_msg[m_exp_phase][0], m_curr_trial_no);
+			if (lra_first) {
+				sprintf(pTxt, "\nFollow the red rectangle with your right hand. Remember the force.  Hit 'Enter'");
+				strcat(pDestTxt[0], pTxt);
+			}
+			else
+			{
+				sprintf(pTxt, "\nRemember the force in your left hand. Hit 'Enter'");
+				strcat(pDestTxt[0], pTxt);
+			}
+		}
 		else if (m_exp_phase >= EXP_PHASE::EXP_PHASE_TOUCH && m_exp_phase <= EXP_PHASE::EXP_ANSWER_CORRECTNESS) {
 			sprintf_s(pDestTxt[0], "%s %d", m_instruction_msg[m_exp_phase][0], m_curr_trial_no);
+			char pTxt[100];
+			if (lra_first && m_exp_phase == EXP_PHASE::EXP_PHASE_TOUCH) {
+				sprintf(pTxt, "Compare the force. Hit 'Enter'.");
+				strcat(pDestTxt[0], pTxt);
+			}
+			else if(!lra_first && m_exp_phase == EXP_PHASE::EXP_PHASE_TOUCH)
+			{
+				sprintf(pTxt, "\nRemember the force in your left hand. Hit 'Enter'");
+				strcat(pDestTxt[0], pTxt);
+			}
 		}
 		else if (m_exp_phase == EXP_PHASE::TRAINING_PHASE2) {
 			sprintf_s(pDestTxt[0], "%s Object Perception Experiment", m_instruction_msg[m_exp_phase][0]);
@@ -551,7 +611,7 @@ int cExp_Size_Perception::getCurrInstructionText(char pDestTxt[3][128])
 			char pTxt[50];
 			sprintf(pDestTxt[2], "%s", m_instruction_msg[m_exp_phase][2]);
 			if (direction_changed) {
-				sprintf(pTxt," direction changed! Hit 'Enter'");
+				sprintf(pTxt, " direction changed! Hit 'Enter'");
 				strcat(pDestTxt[2], pTxt);
 			}
 		}
@@ -589,7 +649,7 @@ void cExp_Size_Perception::sub_display()
 	DISP_TOOLS::Draw_Text(pTxt[1], -0.15f, m_view_height + 0.07f, 0.f);	// 	DISP_TOOLS::Draw_Text(pTxt[1], -7.2f, 3.2f, 0.f);
 	DISP_TOOLS::Draw_Text(pTxt[2], -0.15f, m_view_height + 0.06f, 0.f);	// 	DISP_TOOLS::Draw_Text(pTxt[2], -7.2f, 2.6f, 0.f);
 	DISP_TOOLS::Draw_Text(pTxt[3], -0.15F, m_view_height + 0.05f, 0.f);
-	
+
 	if (tmp) {
 		glColor3f(1, 0, 0);
 		DISP_TOOLS::DrawSquare(square_pos);
@@ -621,7 +681,7 @@ void cExp_Size_Perception::init()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glDisable(GL_CULL_FACE);
 	glDepthFunc(GL_LEQUAL);
-	
+
 	srand(time(NULL));
 	setExpVariables(0.06, 3, 0.02, 12, 0.0025);
 }

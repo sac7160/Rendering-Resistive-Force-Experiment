@@ -82,7 +82,7 @@ void idle()
 {
 	Sleep(10);
 	glutPostRedisplay();
-	if (m_expObjSize.m_exp_phase == EXP_NULL)
+	if (m_expObjSize.m_exp_phase == EXP_PHASE_LRA)
 	{
 		if (m_expObjSize.animation_cnt < 7)
 		{

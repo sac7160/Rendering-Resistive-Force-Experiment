@@ -12,13 +12,14 @@
 
 enum EXP_PHASE {
 	INIT = 0,
-	EXP_NULL,	//showing moving rectangle
+	EXP_PHASE_LRA,	//showing moving rectangle
 	GET_ANSWER,
 	DEVICE_INIT,	// Find the initial contact position.. 
 	INFO_INPUT,
 	TRAINING_PHASE1,	// Check if the contact point is over the border
 	TRAINING_PHASE2,	// Training instruction
 	TEST_PRE_EXP, 
+	EXP_PHASE_PRE_EXP,
 	EXP_PHASE_TOUCH,	//Generate Omni_Touch Force
 	EXP_PHASE3, // A participants feels the 1st stimulus of current trial.
 	EXP_PHASE4, 
@@ -69,6 +70,7 @@ public:
 	void init();
 	void sub_display();
 	void setAudioPhase(int audio_phase);
+	int gen_random_num();
 	
 private:
 	void initTrainingPhase(uint feedback);
@@ -89,6 +91,7 @@ public:
 	vector<float>force_change;
 	time_t animation_start, animation_end;
 	bool direction_changed;
+	bool lra_first;	//omni, lra 순서 random하게 하기 위한 변수 
 
 #ifdef _SS_TEST
 	bool m_enable_ss;
