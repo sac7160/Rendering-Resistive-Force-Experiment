@@ -15,6 +15,7 @@
 namespace PHANTOM_TOOLS
 {
 	void adjust_force(unsigned char);
+	void adjust_force2(double);
 	void initHD();
 	void exitHandler();
 	void printOutput(double);

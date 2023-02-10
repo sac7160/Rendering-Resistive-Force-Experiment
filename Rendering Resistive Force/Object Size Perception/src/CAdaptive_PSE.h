@@ -61,7 +61,7 @@ public:
 	void setExpVariables(double ad_proc_init_stimulus, int ad_proc_num_alternation1, double ad_proc_step_size1, int ad_proc_num_alternation2, double ad_proc_step_size2);
 //	double calculate_stimulus(int curr_answer);
 	double calculatePSE();
-	int calcStimulus(double curr_stimulus, int curr_answer, double *next_stimulus=NULL);
+	int calcStimulus(double curr_stimulus, int curr_answer);
 //	void setStimulus(bool type, float stimulus);
 	int calcForce_tmp();	//실험 종료를 위한 함수 임시 설정
 public:
@@ -82,6 +82,7 @@ public:
 	int m_curr_alt_no;
 	int m_audio_phase;
 	double m_PSE_est;
+	int animation_cnt;
 };
 #endif
 

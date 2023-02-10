@@ -48,7 +48,7 @@ Serial::Serial(const char* portName)
         else
         {
 
-            dcbSerialParams.BaudRate = CBR_57600; // BaudRate 아두이노 보드와 맞추어 주어야함. 
+            dcbSerialParams.BaudRate = CBR_115200; // BaudRate 아두이노 보드와 맞추어 주어야함. 
             dcbSerialParams.ByteSize = 8;
             dcbSerialParams.StopBits = ONESTOPBIT;
             dcbSerialParams.Parity = NOPARITY;

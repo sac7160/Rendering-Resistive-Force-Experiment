@@ -49,7 +49,7 @@ namespace PHANTOM_TOOLS
         printf("Found device model: %s / serial number: %s.\n\n",
             hdGetString(HD_DEVICE_MODEL_TYPE), hdGetString(HD_DEVICE_SERIAL_NUMBER));
 
-        kStiffness = 0.6; /* N/mm 이 변수로 N 조절*/
+        kStiffness = 1.6; /* N/mm 이 변수로 N 조절*/
         
         hUpdateDeviceCallback = hdScheduleAsynchronous(
             DeviceStateCallback, 0, HD_MAX_SCHEDULER_PRIORITY);
@@ -100,7 +100,7 @@ namespace PHANTOM_TOOLS
                 std::cout << "min force 입니다" << '\n';
                 break;
             }
-            kStiffness -= 0.2;
+            kStiffness -= 0.1;
             break;
         case ']':
             if (kStiffness > 3)
@@ -108,9 +108,17 @@ namespace PHANTOM_TOOLS
                 std::cout << "max force 입니다" << '\n';
                 break;
             }
-            kStiffness += 0.2;
+            kStiffness += 0.1;
             break;
         }
+        once = true;
+    }
+
+    void adjust_force2(double force)
+    {
+        if (kStiffness < -3) std::cout << "min force 입니다" << '\n';
+        else if (kStiffness > 3) std::cout << "max force 입니다" << '\n';
+        kStiffness += force;
         once = true;
     }
 

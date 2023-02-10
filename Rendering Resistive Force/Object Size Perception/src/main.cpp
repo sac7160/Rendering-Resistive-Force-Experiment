@@ -100,7 +100,7 @@ void idle()
 			*/
 			//0126 수정 - LRA작동 직사각형 위치에 따라 작동하도록 변경
 
-			if (m_expObjSize.square_pos >= 450 && m_expObjSize.square_pos <= 460) SP->WriteData("0", 255);
+			if (m_expObjSize.square_pos >= 450 && m_expObjSize.square_pos <= 460) SP->WriteData("1]", 255);
 
 
 			//

@@ -1,10 +1,11 @@
 #include "CAdaptive_PSE.h"
+#include "phantom_helper.h"
 
 
 cAdaptive_PSE::cAdaptive_PSE() : m_curr_alt_phase(0), m_curr_alt_no(0)
 {
 	m_alt_val.clear();
-}
+}	//매 trial 마다 새로운 lra진동 -> 매 trial마다 초기화 해줘야함
 
 void cAdaptive_PSE::setExpVariables(double ad_proc_init_stimulus, int ad_proc_num_alternation1, 
 	double ad_proc_step_size1, int ad_proc_num_alternation2, double ad_proc_step_size2)
@@ -27,10 +28,10 @@ void cAdaptive_PSE::setExpVariables(double ad_proc_init_stimulus, int ad_proc_nu
 		return value: 0 (continue the experiment) 1 (terminate)
 		next_stimulus: next stimulus intensity
  ******************************************************************************************/
-int cAdaptive_PSE::calcStimulus(double curr_stimulus, int curr_answer, double *next_stimulus)
+int cAdaptive_PSE::calcStimulus(double curr_stimulus, int curr_answer)
 {
 	int ret = 0;	// if ret ==1, experiment is terminated
-	if(m_curr_trial_no != 1 && m_prev_answer != curr_answer) // alternation
+	if(animation_cnt && m_prev_answer != curr_answer) // alternation
 	{
 		printf("alternation %d %d, curr_alt_no: %d\n", m_prev_answer, curr_answer, m_curr_alt_no);
 		if(m_curr_alt_phase == 0) {	// first alternation phase with larger step size 
@@ -55,23 +56,25 @@ int cAdaptive_PSE::calcStimulus(double curr_stimulus, int curr_answer, double *n
 		}
 	}
 	m_prev_answer = curr_answer;
-	if(ret == 0) {
+	double next_stimulus;
+	if(ret == 0) {	//여기로 phantom::adjust_force 옮기기?
 		if(curr_answer == 0) {	// variable intensity felt stronger (e.g. harder, sharper, etc.) --> decrease the variable stimulus intensity
 			if(m_curr_alt_phase == 0) {
 				if((curr_stimulus - m_step_size1) >= 0.0)
-					*next_stimulus = curr_stimulus - m_step_size1;
-				else *next_stimulus = 0.0;
+					next_stimulus = -m_step_size1;
+				else next_stimulus = 0.0;
 			}
 			else {
 				if((curr_stimulus - m_step_size2) >= 0.0)
-					*next_stimulus = curr_stimulus - m_step_size2;
-				else *next_stimulus = 0.0;
+					next_stimulus = -m_step_size2;
+				else next_stimulus = 0.0;
 			}
 		}
 		else {	// reference stimulus intensity felt stonger (e.g. larger, harder, sharper, etc.) --> increase the variable stimulus intensity
-			if(m_curr_alt_phase == 0) *next_stimulus = curr_stimulus + m_step_size1;
-			else *next_stimulus = curr_stimulus + m_step_size2;
+			if(m_curr_alt_phase == 0) next_stimulus = m_step_size1;
+			else next_stimulus = m_step_size2;
 		}
+		PHANTOM_TOOLS::adjust_force2(next_stimulus);
 	}
 	return ret;
 }

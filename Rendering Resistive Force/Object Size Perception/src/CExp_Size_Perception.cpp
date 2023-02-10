@@ -49,6 +49,7 @@ cExp_Size_Perception::cExp_Size_Perception() : m_num_devices(0)
 	m_textBuf_len = 0;
 	m_tip_mass = 9.8 * 0.07;
 	PHANTOM_TOOLS::set_tip_mass(m_tip_mass);
+	finish_trial = false;
 
 #ifdef _SS_TEST
 	m_enable_ss = false;
@@ -200,18 +201,25 @@ int cExp_Size_Perception::handleKeyboard(unsigned char key, char* ret_string)	//
 		}
 		else if (m_exp_phase == EXP_PHASE::GET_ANSWER)
 		{
+			//calcstimulus? alternation 관련 로직 여기다가 추가?
+			int tmp;
+
 			if (key == '[' || key == ']')
 			{
-				PHANTOM_TOOLS::adjust_force(key);
 				if (key == '[') {
 					usr_input.push_back(1);
 					force_change.push_back(PHANTOM_TOOLS::get_kStiffness());
+					tmp = calcStimulus(PHANTOM_TOOLS::get_kStiffness(), 0);	//next stimulus 삭제하기
 				}
 				else if (key == ']')
 				{
 					usr_input.push_back(2);
 					force_change.push_back(PHANTOM_TOOLS::get_kStiffness());
+					tmp = calcStimulus(PHANTOM_TOOLS::get_kStiffness(), 1);
 				}
+			
+				if (tmp) finish_trial = true;
+				cout << PHANTOM_TOOLS::get_kStiffness();
 				moveToNextPhase();
 			}
 
@@ -351,10 +359,14 @@ int cExp_Size_Perception::moveToNextPhase(char* ret_string)
 		if (gen_random_num() == 0) lra_first = false;
 		else lra_first = true;
 
-		if (animation_cnt >= 2 && animation_cnt <= 6) {
+		if (finish_trial) {
+			m_exp_phase = EXP_PHASE::EXP_PHASE6;
+		}
+		else {	
 			m_exp_phase = EXP_PHASE::EXP_PHASE_PRE_EXP;
 		}
 		//////////////////////////////////////////////////////////////////////////////////////////
+		/*0209 코드 수정 방향 왼->오 고정, alternation관련 실험 끝내는 프로세스 추가
 		else if (animation_cnt == 7) {
 			m_exp_phase = EXP_PHASE::EXP_PHASE3;
 		}
@@ -363,7 +375,7 @@ int cExp_Size_Perception::moveToNextPhase(char* ret_string)
 		}
 		else if (animation_cnt == 9) {
 			m_exp_phase = EXP_PHASE::EXP_PHASE6;
-		}
+		}*/
 	}
 	else if (m_exp_phase == EXP_PHASE::EXP_PHASE_TOUCH) {
 		if (lra_first == false) m_exp_phase = EXP_PHASE::EXP_PHASE_LRA;
@@ -379,7 +391,7 @@ int cExp_Size_Perception::moveToNextPhase(char* ret_string)
 	else if (m_exp_phase == EXP_PHASE::EXP_PHASE5) {
 		m_exp_phase = EXP_PHASE::EXP_PHASE_LRA;
 	}
-	else if (m_exp_phase == EXP_PHASE::EXP_PHASE6) {
+	else if (m_exp_phase == EXP_PHASE::EXP_PHASE6) {	//EXP_PHASE6 = trial 끝내는 phase
 #ifdef _SS_TEST
 		m_enable_ss = false;
 #endif
