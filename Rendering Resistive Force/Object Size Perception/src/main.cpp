@@ -84,8 +84,7 @@ void idle()
 	glutPostRedisplay();
 	if (m_expObjSize.m_exp_phase == EXP_PHASE_LRA)
 	{
-		if (m_expObjSize.animation_cnt < 7)
-		{
+		
 			if (m_expObjSize.square_pos == 0)
 			{
 				Sleep(3000);
@@ -100,10 +99,19 @@ void idle()
 			*/
 			//0126 수정 - LRA작동 직사각형 위치에 따라 작동하도록 변경
 
-			if (m_expObjSize.square_pos >= 450 && m_expObjSize.square_pos <= 460) SP->WriteData("1]", 255);
-
-
-			//
+			if (m_expObjSize.square_pos >= 450 && m_expObjSize.square_pos <= 460)
+			{
+				if(m_expObjSize.m_curr_trial_no == 1)SP->WriteData("9", 255);
+				else if (m_expObjSize.m_curr_trial_no == 2)SP->WriteData("2", 255);
+				else if (m_expObjSize.m_curr_trial_no == 3)SP->WriteData("3", 255);
+				else if (m_expObjSize.m_curr_trial_no == 4)SP->WriteData("4", 255);
+				else if (m_expObjSize.m_curr_trial_no == 5)SP->WriteData("5", 255);
+				else if (m_expObjSize.m_curr_trial_no == 6)SP->WriteData("6", 255);
+				else if (m_expObjSize.m_curr_trial_no == 7)SP->WriteData("7", 255);
+				else if (m_expObjSize.m_curr_trial_no == 8)SP->WriteData("8", 255);
+				else if (m_expObjSize.m_curr_trial_no == 9)SP->WriteData("9", 255);
+			}
+	
 			if (m_expObjSize.square_pos == 1000)
 			{
 				m_expObjSize.animation_end = clock();
@@ -112,25 +120,6 @@ void idle()
 				m_expObjSize.moveToNextPhase();
 				//printf("소요시간: %lf\n", (double)(m_expObjSize.animation_end - m_expObjSize.animation_start) / CLOCKS_PER_SEC);
 			}
-		}
-		else if(m_expObjSize.animation_cnt == 7 || m_expObjSize.animation_cnt == 8)
-		{	
-			if (m_expObjSize.square_pos == 800)
-			{
-				Sleep(3000);
-				m_expObjSize.square_pos -= 4;
-			}
-			m_expObjSize.square_pos -= 4;
-			if (m_expObjSize.square_pos >= 450 && m_expObjSize.square_pos <= 460) SP->WriteData("1", 255);
-			if (m_expObjSize.square_pos == 0)
-			{
-				m_expObjSize.tmp = false;
-				m_expObjSize.square_pos = 800;
-				m_expObjSize.moveToNextPhase();
-			}
-		}
-		else if (m_expObjSize.animation_cnt == 9)m_expObjSize.animation_cnt = 1;
-		
 	}
 
 	/*glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

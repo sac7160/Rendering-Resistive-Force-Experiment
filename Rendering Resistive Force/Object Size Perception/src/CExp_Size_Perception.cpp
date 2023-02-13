@@ -75,7 +75,6 @@ int cExp_Size_Perception::gen_random_num()
 	mt19937 gen(rd());
 	uniform_int_distribution<int> dis(0, 1);
 	int ret = dis(gen);
-	cout << ret;
 	return ret;
 }
 
@@ -201,7 +200,6 @@ int cExp_Size_Perception::handleKeyboard(unsigned char key, char* ret_string)	//
 		}
 		else if (m_exp_phase == EXP_PHASE::GET_ANSWER)
 		{
-			//calcstimulus? alternation 관련 로직 여기다가 추가?
 			int tmp;
 
 			if (key == '[' || key == ']')
@@ -219,7 +217,6 @@ int cExp_Size_Perception::handleKeyboard(unsigned char key, char* ret_string)	//
 				}
 			
 				if (tmp) finish_trial = true;
-				cout << PHANTOM_TOOLS::get_kStiffness();
 				moveToNextPhase();
 			}
 
@@ -400,14 +397,14 @@ int cExp_Size_Perception::moveToNextPhase(char* ret_string)
 #endif
 		//sendArd_vib(0, 0);
 		setAudioPhase(AUDIO_PHASE::PAUSE);
-		m_exp_phase = EXP_PHASE::EXP_ANSWER;
-	}
-	else if (m_exp_phase == EXP_PHASE::EXP_ANSWER) {
-		//	enablePositionCtrl(false);
-
-		direction_changed = false;
 		m_exp_phase = EXP_PHASE::EXP_ANSWER_CORRECTNESS;
 	}
+	//else if (m_exp_phase == EXP_PHASE::EXP_ANSWER) {
+		//	enablePositionCtrl(false);
+
+		//direction_changed = false;
+		//m_exp_phase = EXP_PHASE::EXP_ANSWER_CORRECTNESS;
+	//}
 	else if (m_exp_phase == EXP_PHASE::EXP_ANSWER_CORRECTNESS) {
 		double next_stimulus;
 		int input_answer;
@@ -428,15 +425,24 @@ int cExp_Size_Perception::moveToNextPhase(char* ret_string)
 
 		recordResult(RECORD_TYPE::REC_TRIAL);
 
-		ret = calcForce_tmp();
-		if (ret == 0) {
+		if (m_curr_trial_no != 9) {
 			m_curr_trial_no++;
 			time(&m_trialBeginTime);
 			setAudioPhase(AUDIO_PHASE::PLAY);
-			m_exp_phase = EXP_PHASE::EXP_PHASE_TOUCH;
+			dataAnalysis();
+			/*trial 초기화*/
+			m_curr_alt_phase = 0;
+			m_curr_alt_no = 0;
+			m_alt_val.clear();
+			PHANTOM_TOOLS::init_force(m_curr_trial_no);
+			finish_trial = false;
+			animation_cnt = 1;
+
+			m_exp_phase = EXP_PHASE::EXP_PHASE_PRE_EXP;
 		}
 		else {
 			m_exp_phase = EXP_PHASE::DATA_ANALYSIS;
+			dataAnalysis();
 			setAudioPhase(AUDIO_PHASE::COMPLETE);
 			recordResult(RECORD_TYPE::REC_END);
 			m_exp_phase = EXP_PHASE::EXP_DONE;
@@ -447,6 +453,8 @@ int cExp_Size_Perception::moveToNextPhase(char* ret_string)
 
 void cExp_Size_Perception::dataAnalysis()
 {
+	trial_result = calculatePSE();
+	printf("result = %fN\n", trial_result);
 }
 
 void cExp_Size_Perception::recordResult(int type)
@@ -461,20 +469,20 @@ void cExp_Size_Perception::recordResult(int type)
 
 		printf("Experiment began at %02d:%02d:%02d on %04d/%02d/%02d\n", time_tm.tm_hour, time_tm.tm_min, time_tm.tm_sec,
 			time_tm.tm_year + 1900, time_tm.tm_mon + 1, time_tm.tm_mday);
-		printf("---------------------------------------------------------------------------------------------\n");
+		printf("-----------------------------------------------------------------------------------------------------------------\n");
 		//printf("Trial no.\tObj size(mm)\tanswer(F object larger:0/F+C object larger:1)]\ttrial time (mm:ss)\tLeft)mean_collision_depth(F+C) (mm)\tmean_collision_depth(F) (mm)\tmax_collision_depth(F+C) (mm)\tmax_collision_depth(F)\tRight)mean_collision_depth(F+C) (mm)\tmean_collision_depth(F) (mm)\tmax_collision_depth(F+C) (mm)\tmax_collision_depth(F)\n");
-		printf("Trial no.\t\t\tOmni force(N)\t\t\ttrial time (mm:ss)\tphase1\tphase2\tphase3\tphase4\tphase5\tphase6\tphase7\tphase8\n");
-		printf("---------------------------------------------------------------------------------------------\n");
+		printf("Trial no.\t\t\ttrial time (mm:ss)\t\t\tuser input\n");
+		printf("-----------------------------------------------------------------------------------------------------------------\n");
 		pFile = fopen(m_rec_filename, "a");
 		if (pFile != NULL && !m_testSubject) {
 			fprintf(pFile, "Subject: %s\n", m_subjectID);
 			fprintf(pFile, "Experiment began at %02d:%02d:%02d on %04d/%02d/%02d\n", time_tm.tm_hour, time_tm.tm_min, time_tm.tm_sec,
 				time_tm.tm_year + 1900, time_tm.tm_mon + 1, time_tm.tm_mday);
-			fprintf(pFile, "--------------------------------------------------------------------------------------------\n");
+			fprintf(pFile, "---------------------------------------------------------------------------------------------------------------\n");
 			//fprintf(pFile, "Trial no.\tObj size(mm)\tanswer(F object larger:0/F+C object larger:1)]\ttrial time (mm:ss)\tLeft)mean_collision_depth(F+C) (mm)\tmean_collision_depth(F) (mm)\tmax_collision_depth(F+C) (mm)\tmax_collision_depth(F)\tRight)mean_collision_depth(F+C) (mm)\tmean_collision_depth(F) (mm)\tmax_collision_depth(F+C) (mm)\tmax_collision_depth(F)\n");
 			//	"Trial no.\tstiffness(N/mm)\tanswer(kinesthetic surface stiffer:0/cutaneous surface stiffer1)]\ttrial time (mm:ss)\tLeft)mean_collision_depth(F+C) (mm)\tmean_collision_depth(F) (mm)\tmax_collision_depth(F+C) (mm)\tmax_collision_depth(F)\tRight)mean_collision_depth(F+C) (mm)\tmean_collision_depth(F) (mm)\tmax_collision_depth(F+C) (mm)\tmax_collision_depth(F)\n");
-			fprintf(pFile, "Trial no.\t\t\tOmni force(N)\t\t\ttrial time (mm:ss)\tphase1\tphase2\tphase3\tphase4\tphase5\tphase6\tphase7\tphase8\n");
-			fprintf(pFile, "--------------------------------------------------------------------------------------------\n");
+			fprintf(pFile, "Trial no.\t\t\ttrial time (mm:ss)\t\t\tuser input\n");
+			fprintf(pFile, "---------------------------------------------------------------------------------------------------------------\n");
 			fclose(pFile);
 		}
 	}
@@ -482,7 +490,11 @@ void cExp_Size_Perception::recordResult(int type)
 		exp_result last_result = m_expResult.back();
 		tot_time = difftime(last_result.trial_end_time, last_result.trial_begin_time);
 		err = _localtime64_s(&time_tm, &tot_time);
-		printf("%d\t %.1f -> %.1f -> %.1f -> %.1f -> %.1f -> %.1f -> %.1f -> %.1f      \t%02d:%02d   \t\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n \t\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n", last_result.trial_no,
+		printf("%d\t time : \t%02d:%02d", last_result.trial_no, time_tm.tm_min, time_tm.tm_sec);
+		for (int i = 0; i < last_result.omni_force_user_input.size(); i++) printf("\t%d->", last_result.omni_force_user_input[i]);
+		printf("\n");
+
+		/*printf("%d\t %.1f -> %.1f -> %.1f -> %.1f -> %.1f -> %.1f -> %.1f -> %.1f      \t%02d:%02d   \t\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n \t\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n", last_result.trial_no,
 			last_result.omni_force_change[0],
 			last_result.omni_force_change[1],
 			last_result.omni_force_change[2],
@@ -501,10 +513,10 @@ void cExp_Size_Perception::recordResult(int type)
 			last_result.omni_force_user_input[4],
 			last_result.omni_force_user_input[5],
 			last_result.omni_force_user_input[6],
-			last_result.omni_force_user_input[7]);
+			last_result.omni_force_user_input[7]);*/
 		pFile = fopen(m_rec_filename, "a");
 		if (pFile != NULL && !m_testSubject) {
-			fprintf(pFile, "%d\t %.1f -> %.1f -> %.1f -> %.1f -> %.1f -> %.1f -> %.1f -> %.1f      \t%02d:%02d   \t\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n", last_result.trial_no,
+			/*fprintf(pFile, "%d\t %.1f -> %.1f -> %.1f -> %.1f -> %.1f -> %.1f -> %.1f -> %.1f      \t%02d:%02d   \t\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n", last_result.trial_no,
 				last_result.omni_force_change[0],
 				last_result.omni_force_change[1],
 				last_result.omni_force_change[2],
@@ -524,6 +536,11 @@ void cExp_Size_Perception::recordResult(int type)
 				last_result.omni_force_user_input[5],
 				last_result.omni_force_user_input[6],
 				last_result.omni_force_user_input[7]);
+				*/
+			fprintf(pFile, "%d\t time : \t%02d:%02d", last_result.trial_no, time_tm.tm_min, time_tm.tm_sec);
+			for (int i = 0; i < last_result.omni_force_user_input.size(); i++) fprintf(pFile, "\t%d->", last_result.omni_force_user_input[i]);
+			fprintf(pFile, "\n");
+			fprintf(pFile, "trial_result : %f", trial_result);
 			fclose(pFile);
 		}
 	}
@@ -539,7 +556,7 @@ void cExp_Size_Perception::recordResult(int type)
 		printf("Total experiment time: %02d:%02d\n", time_tm2.tm_min, time_tm2.tm_sec);
 		printf("==================================================\n");
 		//printf("object size PSE: %.3f mm\n", m_PSE_obj_size * 1000.0); //	printf("stiffness PSE: %.2f N/mm\n", m_PSE_K);
-		printf("Size of Omni force : %.1f N\n", PHANTOM_TOOLS::get_kStiffness());
+		printf("Size of Omni force : %.1f N 수정해야함\n", PHANTOM_TOOLS::get_kStiffness());
 		printf("==================================================\n");
 		pFile = fopen(m_rec_filename, "a");
 		if (pFile != NULL && !m_testSubject) {
@@ -549,7 +566,7 @@ void cExp_Size_Perception::recordResult(int type)
 			fprintf(pFile, "Total experiment time: %02d:%02d\n", time_tm2.tm_min, time_tm2.tm_sec);
 			fprintf(pFile, "==================================================\n");
 			//printf("object size PSE: %.3f mm\n", m_PSE_obj_size * 1000.0); //	printf("stiffness PSE: %.2f N/mm\n", m_PSE_K);
-			fprintf(pFile, "Size of Omni force : %.1f N\n", PHANTOM_TOOLS::get_kStiffness());
+			fprintf(pFile, "Size of Omni force : %.1f N \n", PHANTOM_TOOLS::get_kStiffness());
 			fprintf(pFile, "==================================================\n");
 			fclose(pFile);
 		}
@@ -695,7 +712,7 @@ void cExp_Size_Perception::init()
 	glDepthFunc(GL_LEQUAL);
 
 	srand(time(NULL));
-	setExpVariables(0.06, 3, 0.02, 12, 0.0025);
+	setExpVariables(0.06, 3, 0.4, 12, 0.2);
 }
 
 

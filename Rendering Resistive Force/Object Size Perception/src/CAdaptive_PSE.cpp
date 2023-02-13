@@ -31,7 +31,7 @@ void cAdaptive_PSE::setExpVariables(double ad_proc_init_stimulus, int ad_proc_nu
 int cAdaptive_PSE::calcStimulus(double curr_stimulus, int curr_answer)
 {
 	int ret = 0;	// if ret ==1, experiment is terminated
-	if(animation_cnt && m_prev_answer != curr_answer) // alternation
+	if(animation_cnt !=2 && m_prev_answer != curr_answer) // alternation
 	{
 		printf("alternation %d %d, curr_alt_no: %d\n", m_prev_answer, curr_answer, m_curr_alt_no);
 		if(m_curr_alt_phase == 0) {	// first alternation phase with larger step size 
@@ -57,7 +57,7 @@ int cAdaptive_PSE::calcStimulus(double curr_stimulus, int curr_answer)
 	}
 	m_prev_answer = curr_answer;
 	double next_stimulus;
-	if(ret == 0) {	//여기로 phantom::adjust_force 옮기기?
+	if(ret == 0) {	
 		if(curr_answer == 0) {	// variable intensity felt stronger (e.g. harder, sharper, etc.) --> decrease the variable stimulus intensity
 			if(m_curr_alt_phase == 0) {
 				if((curr_stimulus - m_step_size1) >= 0.0)

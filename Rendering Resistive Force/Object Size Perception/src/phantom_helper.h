@@ -23,6 +23,7 @@ namespace PHANTOM_TOOLS
 	float get_kStiffness();
 	void set_tip_mass(float);
 	void renderForce();
+	void init_force(int);
 	static HDboolean bRenderForce;
 	static HDboolean bool_RighToLeft;
 	static HDdouble kStiffness;
