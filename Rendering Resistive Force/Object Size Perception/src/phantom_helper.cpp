@@ -128,10 +128,13 @@ namespace PHANTOM_TOOLS
 
     void adjust_force2(double force)
     {
-        if (kStiffness < -4) std::cout << "min force 입니다" << '\n';
-        else if (kStiffness > 4) std::cout << "max force 입니다" << '\n';
-        kStiffness += force;
-        once = true;
+        if (kStiffness < -3.1) std::cout << "min force 입니다" << '\n';
+        else if (kStiffness > 3.1) std::cout << "max force 입니다" << '\n';
+        else
+        {
+            kStiffness += force;
+            once = true;
+        }
     }
 
     void exitHandler()
@@ -192,8 +195,6 @@ HDCallbackCode HDCALLBACK DeviceStateCallback(void* data)
     hduVector3Dd force;
     hduVector3Dd positionTwell;
 
-    //임시추가 230111
-    //PHANTOM_TOOLS::bRenderForce = HD_FALSE;
 
     HHD hHD = hdGetCurrentDevice();
 
@@ -248,9 +249,9 @@ HDCallbackCode HDCALLBACK DeviceStateCallback(void* data)
         tmp_kStiffness = 0;
     }
     hduVecScale(force, tmp, tmp_kStiffness);
-    
-    /// 중력보상
-    float weight = PHANTOM_TOOLS::tip_mass;
+
+ 
+    /*float weight = PHANTOM_TOOLS::tip_mass;
     hduVector3Dd y = { 0,weight,0 };
 
     if (position[1] < 0)
@@ -298,8 +299,42 @@ HDCallbackCode HDCALLBACK DeviceStateCallback(void* data)
     
     hduVecAdd(force, force, y);
 
-
+    */
     ///
+
+    //230301 virtual plane 생성
+    hduVector3Dd y = { 0,1,0 };
+    if (position[1] < 0)
+    {
+        double penetrationDistance = fabs(position[1]);
+        y = y * penetrationDistance;
+        hduVecAdd(force, y, force);
+    }
+
+    if (position[0] < -130)
+    {
+        hduVector3Dd left_limit = { 0.5,0,0 };
+        hduVecAdd(force, left_limit, force);
+    }
+
+    if (position[0] > 130)
+    {
+        hduVector3Dd right_limit = { -0.5,0,0 };
+        hduVecAdd(force, right_limit, force);
+    }
+    
+    if (position[2] > 80)
+    {
+        hduVector3Dd z_limit = { 0,0,-0.5 };
+        hduVecAdd(force, z_limit, force);
+    }
+    
+
+    float weight = PHANTOM_TOOLS::tip_mass;
+    hduVector3Dd gravity = { 0,weight,0 };
+
+    hduVecAdd(force, force, gravity);      /// 중력보상
+
     hdSetDoublev(HD_CURRENT_FORCE, force);
    
 

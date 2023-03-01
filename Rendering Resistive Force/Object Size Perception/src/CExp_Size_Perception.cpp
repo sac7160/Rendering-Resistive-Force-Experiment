@@ -47,7 +47,7 @@ cExp_Size_Perception::cExp_Size_Perception() : m_num_devices(0)
 	m_exp_phase = EXP_PHASE::INIT;
 	m_view_height = -0.04;
 	m_textBuf_len = 0;
-	m_tip_mass = 9.8 * 0.07;
+	m_tip_mass = 9.8 * 0.003;
 	PHANTOM_TOOLS::set_tip_mass(m_tip_mass);
 	finish_trial = false;
 
@@ -204,6 +204,7 @@ int cExp_Size_Perception::handleKeyboard(unsigned char key, char* ret_string)	//
 
 			if (key == '[' || key == ']')
 			{
+				cout << PHANTOM_TOOLS::get_kStiffness() << endl;
 				if (key == '[') {
 					usr_input.push_back(1);
 					force_change.push_back(PHANTOM_TOOLS::get_kStiffness());
@@ -712,7 +713,7 @@ void cExp_Size_Perception::init()
 	glDepthFunc(GL_LEQUAL);
 
 	srand(time(NULL));
-	setExpVariables(0.06, 3, 0.4, 12, 0.2);
+	setExpVariables(0.06, 3, 0.4, 12, 0.1);
 }
 
 

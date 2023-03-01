@@ -93,6 +93,7 @@ public:
 	bool direction_changed;
 	bool lra_first;	//omni, lra 순서 random하게 하기 위한 변수 
 	bool finish_trial;
+	double trial_result;
 
 #ifdef _SS_TEST
 	bool m_enable_ss;

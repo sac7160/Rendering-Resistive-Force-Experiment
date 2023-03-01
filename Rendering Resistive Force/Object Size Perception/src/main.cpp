@@ -101,7 +101,7 @@ void idle()
 
 			if (m_expObjSize.square_pos >= 450 && m_expObjSize.square_pos <= 460)
 			{
-				if(m_expObjSize.m_curr_trial_no == 1)SP->WriteData("9", 255);
+				if(m_expObjSize.m_curr_trial_no == 1)SP->WriteData("1", 255);
 				else if (m_expObjSize.m_curr_trial_no == 2)SP->WriteData("2", 255);
 				else if (m_expObjSize.m_curr_trial_no == 3)SP->WriteData("3", 255);
 				else if (m_expObjSize.m_curr_trial_no == 4)SP->WriteData("4", 255);
