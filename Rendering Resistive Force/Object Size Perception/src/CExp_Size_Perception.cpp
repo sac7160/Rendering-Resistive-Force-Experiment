@@ -11,11 +11,11 @@ unsigned __stdcall audioThread(void* arg);
 const char m_instruction_msg[][4][128] = {
 	{{"Insert your insert your index finger and middle finger inside the omni."}, {"Then hit 'Enter' to initialize the experimental setup."}},	//INIT
 	{{""}},	//EXP_PHASE_LRA
-	{{"Which force was greater?"},{"left hand : Press '['"},{"right hand : Press ']'"}},	//GET_ANSWER
+	{{"Which force was greater?"},{"left hand : Press '1'"},{"right hand : Press '2'"},{"if you want to feel again, hit'F9"}},	//GET_ANSWER
 	{{"Intializing the contact position..."}}, // DEVICE_INIT 
 	{{"subject ID:"}, {"Type subject ID and hit 'Enter' to begin training session."}, {""}}, // INFO_INPUT
 	{{"Drag two fingers of your right hand along the moving red rectangle on the touch screen"}, {"Press 'n' to go to the next page"}},	// TRAINING_PHASE1
-	{{"Training session2"}, {"If the force you feel in your right hand is greater than the force you feel in your left hand, press ']' "}, {"if(right hand < left hand) press '['"}, {"Press 'e' to go to the next page "}},		// TRAINING PHASE2
+	{{"Training session2"}, {"If the force you feel in your right hand is greater than the force you feel in your left hand, press '2' "}, {"if(right hand < left hand) press '1'"}, {"Press 'e' to go to the next page "}},		// TRAINING PHASE2
 	{{"Follow Square"}, {"To show moving sqaure, hit 'enter'"}},	//TEST_PRE_EXP
 	{{"Trial No. :"} ,{}},	//EXP_PHASE_PRE_EXP
 	{{"Trial No. :"}, {"Move your left hand from left to right."}},	//EXP_PHASE_TOUCH
@@ -59,7 +59,7 @@ cExp_Size_Perception::cExp_Size_Perception() : m_num_devices(0)
 #endif
 
 	tmp = false;
-	square_pos = 0;
+	square_pos = 300;
 	animation_cnt = 0;
 	direction_changed = false;
 	lra_first = false;
@@ -167,7 +167,7 @@ int cExp_Size_Perception::handleKeyboard(unsigned char key, char* ret_string)	//
 			if (key == 13) {
 				ret = moveToNextPhase(ret_string);
 				if (!tmp) {
-					square_pos = 0;
+					square_pos = 300;
 					tmp = true;
 					animation_start = clock();
 				}
@@ -185,12 +185,12 @@ int cExp_Size_Perception::handleKeyboard(unsigned char key, char* ret_string)	//
 				{
 					if (!tmp) {
 						animation_start = clock();
-						square_pos = 0;
+						square_pos = 300;
 						tmp = true;
 					}
 					else if (tmp) {
 						tmp = false;
-						square_pos = 0;
+						square_pos = 300;
 						glViewport(0, 0, (GLsizei)1000, (GLsizei)600);//width, height 하드코딩
 					}
 				}
@@ -202,15 +202,15 @@ int cExp_Size_Perception::handleKeyboard(unsigned char key, char* ret_string)	//
 		{
 			int tmp;
 
-			if (key == '[' || key == ']')
+			if (key == '1' || key == '2')
 			{
 				cout << PHANTOM_TOOLS::get_kStiffness() << endl;
-				if (key == '[') {
+				if (key == '1') {
 					usr_input.push_back(1);
 					force_change.push_back(PHANTOM_TOOLS::get_kStiffness());
 					tmp = calcStimulus(PHANTOM_TOOLS::get_kStiffness(), 0);	//next stimulus 삭제하기
 				}
-				else if (key == ']')
+				else if (key == '2')
 				{
 					usr_input.push_back(2);
 					force_change.push_back(PHANTOM_TOOLS::get_kStiffness());
@@ -232,12 +232,12 @@ int cExp_Size_Perception::handleKeyboard(unsigned char key, char* ret_string)	//
 				{
 					if (!tmp) {
 						animation_start = clock();
-						square_pos = 0;
+						square_pos = 300;
 						tmp = true;
 					}
 					else if (tmp) {
 						tmp = false;
-						square_pos = 0;
+						square_pos = 300;
 						glViewport(0, 0, (GLsizei)1000, (GLsizei)600);//width, height 하드코딩
 					}
 				}
@@ -257,18 +257,18 @@ int cExp_Size_Perception::handleKeyboard(unsigned char key, char* ret_string)	//
 			}
 		}
 		else if (m_exp_phase == EXP_PHASE::EXP_PHASE4 || m_exp_phase == EXP_PHASE::EXP_PHASE5) {
-			if (key == '[' || key == ']')PHANTOM_TOOLS::adjust_force(key);
+			if (key == '1' || key == '2')PHANTOM_TOOLS::adjust_force(key);
 			else if (key == 13)
 			{
 				//Sleep(3000);
 				moveToNextPhase(ret_string);
 				if (!tmp) {
-					square_pos = 800;
+					square_pos = 700;
 					tmp = true;
 				}
 				else if (tmp) {
 					tmp = false;
-					square_pos = 800;
+					square_pos = 700;
 					glViewport(0, 0, (GLsizei)1000, (GLsizei)600);//width, height 하드코딩
 				}
 			}
@@ -692,7 +692,15 @@ void cExp_Size_Perception::handleSpecialKeys(int key, int x, int y)
 	case GLUT_KEY_F8:
 		PHANTOM_TOOLS::change_direction();
 		if (!direction_changed) direction_changed = true;
+		break;
+	case GLUT_KEY_F9:
+		m_exp_phase = EXP_PHASE::EXP_PHASE_LRA;
+		animation_cnt--;
+		square_pos = 300;
+		tmp = true;
 	}
+	
+
 }
 
 

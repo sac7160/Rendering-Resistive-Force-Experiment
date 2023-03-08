@@ -49,7 +49,7 @@ namespace PHANTOM_TOOLS
         printf("Found device model: %s / serial number: %s.\n\n",
             hdGetString(HD_DEVICE_MODEL_TYPE), hdGetString(HD_DEVICE_SERIAL_NUMBER));
 
-        kStiffness = 1.5; /* N/mm 이 변수로 N 조절*/
+        kStiffness = 1.0; /* N/mm 이 변수로 N 조절*/
         
         hUpdateDeviceCallback = hdScheduleAsynchronous(
             DeviceStateCallback, 0, HD_MAX_SCHEDULER_PRIORITY);
@@ -106,7 +106,7 @@ namespace PHANTOM_TOOLS
 
         switch (key)
         {
-        case '[':
+        case '1':
             if (kStiffness < -3)
             {
                 std::cout << "min force 입니다" << '\n';
@@ -114,7 +114,7 @@ namespace PHANTOM_TOOLS
             }
             kStiffness -= 0.1;
             break;
-        case ']':
+        case '2':
             if (kStiffness > 3)
             {
                 std::cout << "max force 입니다" << '\n';
@@ -304,9 +304,9 @@ HDCallbackCode HDCALLBACK DeviceStateCallback(void* data)
 
     //230301 virtual plane 생성
     hduVector3Dd y = { 0,1,0 };
-    if (position[1] < 0)
+    if (position[1] < 100)
     {
-        double penetrationDistance = fabs(position[1]);
+        double penetrationDistance = fabs(position[1]-100);
         y = y * penetrationDistance;
         hduVecAdd(force, y, force);
     }

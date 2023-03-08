@@ -85,7 +85,7 @@ void idle()
 	if (m_expObjSize.m_exp_phase == EXP_PHASE_LRA)
 	{
 		
-			if (m_expObjSize.square_pos == 0)
+			if (m_expObjSize.square_pos == 300)
 			{
 				Sleep(3000);
 				m_expObjSize.square_pos += 4;
@@ -99,7 +99,7 @@ void idle()
 			*/
 			//0126 수정 - LRA작동 직사각형 위치에 따라 작동하도록 변경
 
-			if (m_expObjSize.square_pos >= 450 && m_expObjSize.square_pos <= 460)
+			if (m_expObjSize.square_pos >= 500 && m_expObjSize.square_pos <= 510)
 			{
 				if(m_expObjSize.m_curr_trial_no == 1)SP->WriteData("1", 255);
 				else if (m_expObjSize.m_curr_trial_no == 2)SP->WriteData("2", 255);
@@ -112,11 +112,11 @@ void idle()
 				else if (m_expObjSize.m_curr_trial_no == 9)SP->WriteData("9", 255);
 			}
 	
-			if (m_expObjSize.square_pos == 1000)
+			if (m_expObjSize.square_pos == 700)
 			{
 				m_expObjSize.animation_end = clock();
 				m_expObjSize.tmp = false;
-				m_expObjSize.square_pos = 0;
+				m_expObjSize.square_pos = 300;
 				m_expObjSize.moveToNextPhase();
 				//printf("소요시간: %lf\n", (double)(m_expObjSize.animation_end - m_expObjSize.animation_start) / CLOCKS_PER_SEC);
 			}
