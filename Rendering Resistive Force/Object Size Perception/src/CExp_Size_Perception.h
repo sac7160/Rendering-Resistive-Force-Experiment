@@ -86,6 +86,8 @@ public:
 	float m_tip_mass;
 	float square_pos;
 	bool tmp; //애니메이션 추가하기위해 임시 추가
+	bool draw_phantom_position_square;
+
 	//int animation_cnt;
 	vector<int>usr_input;	//결과 저장
 	vector<float>force_change;

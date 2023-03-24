@@ -81,17 +81,23 @@ time_t start;
 void idle()
 {
 	Sleep(10);
+	///phantom position
+	printf("%f", fabs(PHANTOM_TOOLS::get_phantom_x_position()));
+	printf("\n");
 	glutPostRedisplay();
-	if (m_expObjSize.m_exp_phase == EXP_PHASE_LRA)
+	if (m_expObjSize.m_exp_phase == EXP_PHASE_LRA)	//right hand
 	{
 		
 			if (m_expObjSize.square_pos == 300)
 			{
-				Sleep(3000);
+				double now = clock();
+				while (clock() - now < 3000);
+				//Sleep(3000);
 				m_expObjSize.square_pos += 4;
 			}
 			m_expObjSize.square_pos += 4;
 			/*
+			tablet size : 34cm X 19cm
 			1000 pixel => 270mm
 			square_pos += 4 : 2.744sec
 			=> 98.396 mm/sec
@@ -116,10 +122,29 @@ void idle()
 			{
 				m_expObjSize.animation_end = clock();
 				m_expObjSize.tmp = false;
+				if (m_expObjSize.lra_first) m_expObjSize.tmp = true;
 				m_expObjSize.square_pos = 300;
 				m_expObjSize.moveToNextPhase();
 				//printf("소요시간: %lf\n", (double)(m_expObjSize.animation_end - m_expObjSize.animation_start) / CLOCKS_PER_SEC);
 			}
+	}
+	else if (m_expObjSize.m_exp_phase == EXP_PHASE_TOUCH)	//left hand
+	{
+		if (m_expObjSize.draw_phantom_position_square)
+		{
+
+		}
+		if (m_expObjSize.square_pos == 300)
+		{
+			m_expObjSize.square_pos += 4;
+		}
+		m_expObjSize.square_pos += 4;
+		if (m_expObjSize.square_pos == 700)
+		{
+			m_expObjSize.square_pos = 300;
+			//printf("소요시간: %lf\n", (double)(m_expObjSize.animation_end - m_expObjSize.animation_start) / CLOCKS_PER_SEC);
+		}
+
 	}
 
 	/*glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

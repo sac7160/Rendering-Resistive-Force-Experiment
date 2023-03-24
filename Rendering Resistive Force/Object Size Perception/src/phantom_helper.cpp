@@ -107,7 +107,7 @@ namespace PHANTOM_TOOLS
         switch (key)
         {
         case '1':
-            if (kStiffness < -3)
+            if (kStiffness < -6)
             {
                 std::cout << "min force 입니다" << '\n';
                 break;
@@ -115,7 +115,7 @@ namespace PHANTOM_TOOLS
             kStiffness -= 0.1;
             break;
         case '2':
-            if (kStiffness > 3)
+            if (kStiffness > 6)
             {
                 std::cout << "max force 입니다" << '\n';
                 break;
@@ -178,6 +178,14 @@ namespace PHANTOM_TOOLS
     void renderForce()
     {
         bRenderForce = HD_TRUE;
+    }
+    double get_phantom_x_position()
+    {
+        return phantom_x_position;
+    }
+    VOID set_phantom_x_position(double position)
+    {
+        phantom_x_position = position;
     }
 }
 
@@ -300,7 +308,10 @@ HDCallbackCode HDCALLBACK DeviceStateCallback(void* data)
     hduVecAdd(force, force, y);
 
     */
-    ///
+    
+    //230324 read phantom position
+    PHANTOM_TOOLS::set_phantom_x_position(position[0]);
+
 
     //230301 virtual plane 생성
     hduVector3Dd y = { 0,1,0 };
@@ -311,13 +322,13 @@ HDCallbackCode HDCALLBACK DeviceStateCallback(void* data)
         hduVecAdd(force, y, force);
     }
 
-    if (position[0] < -130)
+    if (position[0] < -150)
     {
         hduVector3Dd left_limit = { 0.5,0,0 };
         hduVecAdd(force, left_limit, force);
     }
 
-    if (position[0] > 130)
+    if (position[0] > 150)
     {
         hduVector3Dd right_limit = { -0.5,0,0 };
         hduVecAdd(force, right_limit, force);

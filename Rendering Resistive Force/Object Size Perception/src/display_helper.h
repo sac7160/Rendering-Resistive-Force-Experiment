@@ -51,7 +51,7 @@ namespace DISP_TOOLS {
 	extern GLfloat tmp_ystep;
 	extern int cnt;
 
-	void DrawSquare(int);
+	void DrawSquare(int, int);
 
 
 	//

@@ -63,9 +63,11 @@ namespace DISP_TOOLS {//DISP_VAR {
 		glClearColor(background_color[0], background_color[1], background_color[2], background_color[3]);
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
+		//230324수정
+		glViewport(0, 0, 1000, 600);		//view port 하드코딩
 		//	glTranslatef(dist[0], dist[1], dist[2]);
-		gluLookAt(camera_pos[0], camera_pos[1], camera_pos[2], camera_look[0], camera_look[1], camera_look[2], camera_up[0], camera_up[1], camera_up[2]);
-		glRotatef(rX, 1, 0, 0);
+		//gluLookAt(camera_pos[0], camera_pos[1], camera_pos[2], camera_look[0], camera_look[1], camera_look[2], camera_up[0], camera_up[1], camera_up[2]);
+		/*glRotatef(rX, 1, 0, 0);
 		glRotatef(rY, 0, 1, 0);
 		glShadeModel(GL_SMOOTH);
 		glEnable(GL_DEPTH_TEST);
@@ -73,7 +75,7 @@ namespace DISP_TOOLS {//DISP_VAR {
 		glEnable(GL_NORMALIZE);
 		glEnable(GL_LIGHT_MODEL_TWO_SIDE);	// two lightings
 		glShadeModel(GL_SMOOTH);
-
+		*/
 		GLfloat lightZeroPosition[] = { 0.0, 3.0, -3.5, 0.0 };//{10.0, 4.0, 100.0, 0.0};// 
 		GLfloat lightZeroColor[] = { 0.8, 0.8, 0.8, 1.0 };
 		GLfloat lightOnePosition[] = { 0.0, -3.0, 3.5, 0.0 };//{-1.0, -2.0, -100.0, 0.0};//
@@ -337,16 +339,20 @@ namespace DISP_TOOLS {//DISP_VAR {
 	}
 
 	////////
-	void DrawSquare(int x)
+	void DrawSquare(int x,int y)
 	{
-		glViewport(x, 250, 200, 100);
+		
+		glViewport(x, y, 200, 100);
 		glBegin(GL_POLYGON);
-		glVertex3f(-0.5, -0.5, 0.0);
-		glVertex3f(+0.5, -0.5, 0.0);
-		glVertex3f(+0.5, 0.5, 0.0);
-		glVertex3f(-0.5, 0.5, 0.0);
+		glVertex3f(-0.25, -0.25, 0.0);
+		glVertex3f(+0.25, -0.25, 0.0);
+		glVertex3f(+0.25, 0.25, 0.0);
+		glVertex3f(-0.25, 0.25, 0.0);
 		glEnd();
-
+		//glColor3f(1.0f,0, 0);
+		//glBegin(GL_POLYGON);
+		//glRectf(-25.0f, 25.0f, 25.0f, -25.0f);
+		//glEnd();
 	}
 
 };

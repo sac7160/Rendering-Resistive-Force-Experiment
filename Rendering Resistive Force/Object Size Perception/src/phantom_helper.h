@@ -24,9 +24,12 @@ namespace PHANTOM_TOOLS
 	void set_tip_mass(float);
 	void renderForce();
 	void init_force(int);
+	double get_phantom_x_position();
+	VOID set_phantom_x_position(double);
 	static HDboolean bRenderForce;
 	static HDboolean bool_RighToLeft;
 	static HDdouble kStiffness;
+	static HDdouble phantom_x_position;
 	static float tip_mass;
 }
 

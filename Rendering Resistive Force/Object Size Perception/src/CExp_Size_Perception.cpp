@@ -59,6 +59,7 @@ cExp_Size_Perception::cExp_Size_Perception() : m_num_devices(0)
 #endif
 
 	tmp = false;
+	draw_phantom_position_square = false;
 	square_pos = 300;
 	animation_cnt = 0;
 	direction_changed = false;
@@ -194,6 +195,7 @@ int cExp_Size_Perception::handleKeyboard(unsigned char key, char* ret_string)	//
 						glViewport(0, 0, (GLsizei)1000, (GLsizei)600);//width, height 하드코딩
 					}
 				}
+				else tmp = true;
 				ret = moveToNextPhase(ret_string);
 			}
 			
@@ -228,19 +230,18 @@ int cExp_Size_Perception::handleKeyboard(unsigned char key, char* ret_string)	//
 			{
 				//Sleep(3000);
 				moveToNextPhase(ret_string);
+				
 				if (!lra_first)
 				{
-					if (!tmp) {
+					
 						animation_start = clock();
 						square_pos = 300;
 						tmp = true;
-					}
-					else if (tmp) {
-						tmp = false;
-						square_pos = 300;
-						glViewport(0, 0, (GLsizei)1000, (GLsizei)600);//width, height 하드코딩
-					}
+				
 				}
+				else tmp = false;
+				draw_phantom_position_square = false;
+				glViewport(0, 0, (GLsizei)1000, (GLsizei)600);
 			}
 		}
 		else if (m_exp_phase == EXP_PHASE::EXP_PHASE3) {
@@ -338,7 +339,10 @@ int cExp_Size_Perception::moveToNextPhase(char* ret_string)
 	else if (m_exp_phase == EXP_PHASE::EXP_PHASE_PRE_EXP)
 	{
 		if (lra_first == true) m_exp_phase = EXP_PHASE::EXP_PHASE_LRA;
-		else if (lra_first == false) m_exp_phase = EXP_PHASE::EXP_PHASE_TOUCH;
+		else if (lra_first == false) {
+			m_exp_phase = EXP_PHASE::EXP_PHASE_TOUCH;
+			draw_phantom_position_square = true;
+		}
 	}
 	else if (m_exp_phase == EXP_PHASE::EXP_PHASE_LRA)
 	{
@@ -349,8 +353,11 @@ int cExp_Size_Perception::moveToNextPhase(char* ret_string)
 		//////////////////////////////////////////////////////////////////////////////////////////
 		if (animation_cnt == 1) m_exp_phase = EXP_PHASE::EXP_PHASE_PRE_EXP;
 		else if (lra_first == false) m_exp_phase = EXP_PHASE::GET_ANSWER;
-		else if (lra_first == true) m_exp_phase = EXP_PHASE::EXP_PHASE_TOUCH;
-		//////////////////////////////////////////////////////////////////////////////////////////
+		else if (lra_first == true) {
+			m_exp_phase = EXP_PHASE::EXP_PHASE_TOUCH;
+			draw_phantom_position_square = true;
+		}
+			//////////////////////////////////////////////////////////////////////////////////////////
 	}
 	else if (m_exp_phase == EXP_PHASE::GET_ANSWER) {
 		//////////////////////////////////////////////////////////////////////////////////////////
@@ -424,13 +431,14 @@ int cExp_Size_Perception::moveToNextPhase(char* ret_string)
 		usr_input.clear();
 		m_expResult.push_back(curr_result);
 
-		recordResult(RECORD_TYPE::REC_TRIAL);
+		//recordResult(RECORD_TYPE::REC_TRIAL);
 
 		if (m_curr_trial_no != 9) {
 			m_curr_trial_no++;
 			time(&m_trialBeginTime);
 			setAudioPhase(AUDIO_PHASE::PLAY);
 			dataAnalysis();
+			recordResult(RECORD_TYPE::REC_TRIAL); //추가
 			/*trial 초기화*/
 			m_curr_alt_phase = 0;
 			m_curr_alt_no = 0;
@@ -444,6 +452,7 @@ int cExp_Size_Perception::moveToNextPhase(char* ret_string)
 		else {
 			m_exp_phase = EXP_PHASE::DATA_ANALYSIS;
 			dataAnalysis();
+			recordResult(RECORD_TYPE::REC_TRIAL);//추가
 			setAudioPhase(AUDIO_PHASE::COMPLETE);
 			recordResult(RECORD_TYPE::REC_END);
 			m_exp_phase = EXP_PHASE::EXP_DONE;
@@ -491,6 +500,7 @@ void cExp_Size_Perception::recordResult(int type)
 		exp_result last_result = m_expResult.back();
 		tot_time = difftime(last_result.trial_end_time, last_result.trial_begin_time);
 		err = _localtime64_s(&time_tm, &tot_time);
+		printf("\n");
 		printf("%d\t time : \t%02d:%02d", last_result.trial_no, time_tm.tm_min, time_tm.tm_sec);
 		for (int i = 0; i < last_result.omni_force_user_input.size(); i++) printf("\t%d->", last_result.omni_force_user_input[i]);
 		printf("\n");
@@ -675,14 +685,18 @@ void cExp_Size_Perception::sub_display()
 		for (i = 0; i < 4; i++) pTxt[i][0] = NULL;
 	}
 	glColor3f(0, 0, 0);
-	DISP_TOOLS::Draw_Text(pTxt[0], -0.15f, m_view_height + 0.08f, 0.f);	//	DISP_TOOLS::Draw_Text(pTxt[0], -7.2f, 3.8f, 0.f);
-	DISP_TOOLS::Draw_Text(pTxt[1], -0.15f, m_view_height + 0.07f, 0.f);	// 	DISP_TOOLS::Draw_Text(pTxt[1], -7.2f, 3.2f, 0.f);
-	DISP_TOOLS::Draw_Text(pTxt[2], -0.15f, m_view_height + 0.06f, 0.f);	// 	DISP_TOOLS::Draw_Text(pTxt[2], -7.2f, 2.6f, 0.f);
-	DISP_TOOLS::Draw_Text(pTxt[3], -0.15F, m_view_height + 0.05f, 0.f);
+	DISP_TOOLS::Draw_Text(pTxt[0], -0.15f, m_view_height + 0.13f, 0.f);	//	DISP_TOOLS::Draw_Text(pTxt[0], -7.2f, 3.8f, 0.f);
+	DISP_TOOLS::Draw_Text(pTxt[1], -0.15f, m_view_height + 0.12f, 0.f);	// 	DISP_TOOLS::Draw_Text(pTxt[1], -7.2f, 3.2f, 0.f);
+	DISP_TOOLS::Draw_Text(pTxt[2], -0.15f, m_view_height + 0.11f, 0.f);	// 	DISP_TOOLS::Draw_Text(pTxt[2], -7.2f, 2.6f, 0.f);
+	DISP_TOOLS::Draw_Text(pTxt[3], -0.15F, m_view_height + 0.10f, 0.f);
 
 	if (tmp) {
 		glColor3f(1, 0, 0);
-		DISP_TOOLS::DrawSquare(square_pos);
+		DISP_TOOLS::DrawSquare(square_pos,250);
+	}
+	if (draw_phantom_position_square) {
+		glColor3f(0, 1, 0);
+		DISP_TOOLS::DrawSquare(fabs(PHANTOM_TOOLS::get_phantom_x_position())+300, 100);
 	}
 }
 
