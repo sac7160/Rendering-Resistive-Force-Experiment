@@ -49,7 +49,7 @@ namespace PHANTOM_TOOLS
         printf("Found device model: %s / serial number: %s.\n\n",
             hdGetString(HD_DEVICE_MODEL_TYPE), hdGetString(HD_DEVICE_SERIAL_NUMBER));
 
-        kStiffness = 1.0; /* N/mm 이 변수로 N 조절*/
+        kStiffness = 2.0; /* N/mm 이 변수로 N 조절*/
         
         hUpdateDeviceCallback = hdScheduleAsynchronous(
             DeviceStateCallback, 0, HD_MAX_SCHEDULER_PRIORITY);
@@ -233,7 +233,7 @@ HDCallbackCode HDCALLBACK DeviceStateCallback(void* data)
     //hduVecScale(force, tmp, kStiffness);
 
     /* Send the force to the device. */
-    if (position[0] >= -10 && position[0] <=10) PHANTOM_TOOLS::bRenderForce = HD_TRUE;
+    if (position[0] >= -5 && position[0] <=5) PHANTOM_TOOLS::bRenderForce = HD_TRUE;
     else PHANTOM_TOOLS::bRenderForce = HD_FALSE;
 
  
@@ -322,13 +322,13 @@ HDCallbackCode HDCALLBACK DeviceStateCallback(void* data)
         hduVecAdd(force, y, force);
     }
 
-    if (position[0] < -150)
+    if (position[0] < -250)
     {
         hduVector3Dd left_limit = { 0.5,0,0 };
         hduVecAdd(force, left_limit, force);
     }
 
-    if (position[0] > 150)
+    if (position[0] > 250)
     {
         hduVector3Dd right_limit = { -0.5,0,0 };
         hduVecAdd(force, right_limit, force);

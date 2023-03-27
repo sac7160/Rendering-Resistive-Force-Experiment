@@ -88,7 +88,7 @@ void idle()
 	if (m_expObjSize.m_exp_phase == EXP_PHASE_LRA)	//right hand
 	{
 		
-			if (m_expObjSize.square_pos == 300)
+			if (m_expObjSize.square_pos == 200)
 			{
 				double now = clock();
 				while (clock() - now < 3000);
@@ -118,7 +118,7 @@ void idle()
 				else if (m_expObjSize.m_curr_trial_no == 9)SP->WriteData("9", 255);
 			}
 	
-			if (m_expObjSize.square_pos == 700)
+			if (m_expObjSize.square_pos == 800)
 			{
 				m_expObjSize.animation_end = clock();
 				m_expObjSize.tmp = false;
@@ -134,14 +134,14 @@ void idle()
 		{
 
 		}
-		if (m_expObjSize.square_pos == 300)
+		if (m_expObjSize.square_pos == 200)
 		{
 			m_expObjSize.square_pos += 4;
 		}
 		m_expObjSize.square_pos += 4;
-		if (m_expObjSize.square_pos == 700)
+		if (m_expObjSize.square_pos == 800)
 		{
-			m_expObjSize.square_pos = 300;
+			m_expObjSize.square_pos = 200;
 			//printf("소요시간: %lf\n", (double)(m_expObjSize.animation_end - m_expObjSize.animation_start) / CLOCKS_PER_SEC);
 		}
 

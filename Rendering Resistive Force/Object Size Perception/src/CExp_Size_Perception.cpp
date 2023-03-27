@@ -696,7 +696,7 @@ void cExp_Size_Perception::sub_display()
 	}
 	if (draw_phantom_position_square) {
 		glColor3f(0, 1, 0);
-		DISP_TOOLS::DrawSquare(fabs(PHANTOM_TOOLS::get_phantom_x_position())+300, 100);
+		DISP_TOOLS::DrawSquare(PHANTOM_TOOLS::get_phantom_x_position()*2+500, 100);
 	}
 }
 
