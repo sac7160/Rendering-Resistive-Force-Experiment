@@ -60,7 +60,7 @@ cExp_Size_Perception::cExp_Size_Perception() : m_num_devices(0)
 
 	tmp = false;
 	draw_phantom_position_square = false;
-	square_pos = 300;
+	square_pos = 200;
 	animation_cnt = 0;
 	direction_changed = false;
 	lra_first = false;
@@ -168,7 +168,7 @@ int cExp_Size_Perception::handleKeyboard(unsigned char key, char* ret_string)	//
 			if (key == 13) {
 				ret = moveToNextPhase(ret_string);
 				if (!tmp) {
-					square_pos = 300;
+					square_pos = 200;
 					tmp = true;
 					animation_start = clock();
 				}
@@ -186,12 +186,12 @@ int cExp_Size_Perception::handleKeyboard(unsigned char key, char* ret_string)	//
 				{
 					if (!tmp) {
 						animation_start = clock();
-						square_pos = 300;
+						square_pos = 200;
 						tmp = true;
 					}
 					else if (tmp) {
 						tmp = false;
-						square_pos = 300;
+						square_pos = 200;
 						glViewport(0, 0, (GLsizei)1000, (GLsizei)600);//width, height 하드코딩
 					}
 				}
@@ -235,7 +235,7 @@ int cExp_Size_Perception::handleKeyboard(unsigned char key, char* ret_string)	//
 				{
 					
 						animation_start = clock();
-						square_pos = 300;
+						square_pos = 200;
 						tmp = true;
 				
 				}
@@ -264,12 +264,12 @@ int cExp_Size_Perception::handleKeyboard(unsigned char key, char* ret_string)	//
 				//Sleep(3000);
 				moveToNextPhase(ret_string);
 				if (!tmp) {
-					square_pos = 700;
+					square_pos = 800;
 					tmp = true;
 				}
 				else if (tmp) {
 					tmp = false;
-					square_pos = 700;
+					square_pos = 800;
 					glViewport(0, 0, (GLsizei)1000, (GLsizei)600);//width, height 하드코딩
 				}
 			}
@@ -692,7 +692,7 @@ void cExp_Size_Perception::sub_display()
 
 	if (tmp) {
 		glColor3f(1, 0, 0);
-		DISP_TOOLS::DrawSquare(square_pos,250);
+		DISP_TOOLS::DrawSquare(square_pos,200);
 	}
 	if (draw_phantom_position_square) {
 		glColor3f(0, 1, 0);
@@ -710,7 +710,7 @@ void cExp_Size_Perception::handleSpecialKeys(int key, int x, int y)
 	case GLUT_KEY_F9:
 		m_exp_phase = EXP_PHASE::EXP_PHASE_LRA;
 		animation_cnt--;
-		square_pos = 300;
+		square_pos = 200;
 		tmp = true;
 	}
 	

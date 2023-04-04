@@ -128,8 +128,8 @@ namespace PHANTOM_TOOLS
 
     void adjust_force2(double force)
     {
-        if (kStiffness < -3.1) std::cout << "min force 입니다" << '\n';
-        else if (kStiffness > 3.1) std::cout << "max force 입니다" << '\n';
+        if (kStiffness < -6) std::cout << "min force 입니다" << '\n';
+        else if (kStiffness > 6) std::cout << "max force 입니다" << '\n';
         else
         {
             kStiffness += force;
