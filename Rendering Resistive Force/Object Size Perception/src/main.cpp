@@ -22,7 +22,7 @@ void idle();
 
 const int WIDTH = 1000;//400;
 const int HEIGHT = 600;//400;
-const int animation_speed = 8;
+int animation_speed = 12;
 int width = WIDTH, height = HEIGHT;
 
 cExp_Size_Perception m_expObjSize;
@@ -87,14 +87,48 @@ void idle()
 	//printf("%f", fabs(PHANTOM_TOOLS::get_phantom_x_position()));
 	//printf("\n");
 	glutPostRedisplay();
+	if (m_expObjSize.m_curr_trial_no == 3 || m_expObjSize.m_curr_trial_no == 4 ||
+		m_expObjSize.m_curr_trial_no == 7 || m_expObjSize.m_curr_trial_no == 9)
+	{
+		animation_speed = 16;
+	}
 	if (m_expObjSize.m_exp_phase == EXP_PHASE_LRA)	//right hand
 	{
-		
 			if (m_expObjSize.square_pos == 200)
 			{
 				double now = clock();
-				while (clock() - now < 3000);
-				Sleep(2000);
+				while (clock() - now < 3000)
+				{
+					int tmp = 3000 - (clock() - now);
+					tmp = tmp / 1000;
+					m_expObjSize.set_left_time(tmp);
+					//m_expObjSize.left_time = tmp;
+					printf("%d", m_expObjSize.left_time);
+				}
+				/* 직사각형 이;동하기전 남은 시간 표시 보류
+				int tmp=3;
+				while (clock() - now < 1000)
+				{
+					tmp = 3000 - (clock() - now);
+					tmp = tmp / 1000;
+					
+				}
+				m_expObjSize.set_left_time(tmp);
+				while (clock() - now < 2000)
+				{
+					tmp = 2000 - (clock() - now);
+					tmp = tmp / 1000;
+					
+				}
+				m_expObjSize.set_left_time(tmp);
+				while (clock() - now < 3000)
+				{
+					tmp = 1000 - (clock() - now);
+					tmp = tmp / 1000;
+					
+				}
+				m_expObjSize.set_left_time(tmp);
+				*/
 				m_expObjSize.square_pos += animation_speed;
 			}
 			m_expObjSize.square_pos += animation_speed;
@@ -117,7 +151,6 @@ void idle()
 				else if (m_expObjSize.m_curr_trial_no == 6)SP->WriteData("6", 255);
 				else if (m_expObjSize.m_curr_trial_no == 7)SP->WriteData("7", 255);
 				else if (m_expObjSize.m_curr_trial_no == 8)SP->WriteData("8", 255);
-				else if (m_expObjSize.m_curr_trial_no == 9)SP->WriteData("9", 255);
 			}
 	
 			if (m_expObjSize.square_pos >= 800)
@@ -125,7 +158,7 @@ void idle()
 				m_expObjSize.animation_end = clock();
 				m_expObjSize.tmp = false;
 				if (m_expObjSize.lra_first) m_expObjSize.tmp = true;
-				m_expObjSize.square_pos = 300;
+				m_expObjSize.square_pos = 200;
 				m_expObjSize.moveToNextPhase();
 				//printf("소요시간: %lf\n", (double)(m_expObjSize.animation_end - m_expObjSize.animation_start) / CLOCKS_PER_SEC);
 			}
@@ -148,6 +181,7 @@ void idle()
 		}
 
 	}
+
 
 	/*glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

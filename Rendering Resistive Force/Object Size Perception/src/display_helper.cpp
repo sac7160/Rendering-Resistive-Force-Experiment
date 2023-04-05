@@ -354,5 +354,13 @@ namespace DISP_TOOLS {//DISP_VAR {
 		//glRectf(-25.0f, 25.0f, 25.0f, -25.0f);
 		//glEnd();
 	}
+	void Draw_Text2(char pTxt, float raster_pos_x, float raster_pos_y, float raster_pos_z, void* font)
+	{
+		//glViewport(10, 10, 300,500);
+		
+		glRasterPos3f(raster_pos_x, raster_pos_y, raster_pos_z);
+		
+		glutBitmapCharacter(font, pTxt);
+	}
 
 };

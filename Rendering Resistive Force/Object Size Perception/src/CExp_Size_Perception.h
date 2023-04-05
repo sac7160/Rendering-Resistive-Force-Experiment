@@ -71,6 +71,8 @@ public:
 	void sub_display();
 	void setAudioPhase(int audio_phase);
 	int gen_random_num();
+	char get_left_time();
+	void set_left_time(int);
 	
 private:
 	void initTrainingPhase(uint feedback);
@@ -96,6 +98,7 @@ public:
 	bool lra_first;	//omni, lra 순서 random하게 하기 위한 변수 
 	bool finish_trial;
 	double trial_result;
+    int left_time;	//직사각형 움직이기까지 남은 시간
 
 #ifdef _SS_TEST
 	bool m_enable_ss;

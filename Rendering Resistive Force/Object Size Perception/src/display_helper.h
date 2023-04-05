@@ -52,7 +52,7 @@ namespace DISP_TOOLS {
 	extern int cnt;
 
 	void DrawSquare(int, int);
-
+	void Draw_Text2(char pTxt, float raster_pos_x, float raster_pos_y, float raster_pos_z, void* font = GLUT_BITMAP_TIMES_ROMAN_24);
 
 	//
 };

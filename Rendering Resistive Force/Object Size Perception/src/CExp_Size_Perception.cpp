@@ -50,6 +50,7 @@ cExp_Size_Perception::cExp_Size_Perception() : m_num_devices(0)
 	m_tip_mass = 9.8 * 0.003;
 	PHANTOM_TOOLS::set_tip_mass(m_tip_mass);
 	finish_trial = false;
+	left_time = 3;
 
 #ifdef _SS_TEST
 	m_enable_ss = false;
@@ -432,8 +433,8 @@ int cExp_Size_Perception::moveToNextPhase(char* ret_string)
 		m_expResult.push_back(curr_result);
 
 		//recordResult(RECORD_TYPE::REC_TRIAL);
-
-		if (m_curr_trial_no != 9) {
+		
+		if (m_curr_trial_no != 8) {
 			m_curr_trial_no++;
 			time(&m_trialBeginTime);
 			setAudioPhase(AUDIO_PHASE::PLAY);
@@ -676,6 +677,18 @@ int cExp_Size_Perception::getCurrInstructionText(char pDestTxt[3][128])
 	return ret;
 }
 
+char cExp_Size_Perception::get_left_time()
+{
+	char txt = left_time + '0';
+	return txt;
+}
+
+void cExp_Size_Perception::set_left_time(int set_time)
+{
+	left_time = set_time;
+}
+
+
 void cExp_Size_Perception::sub_display()
 {
 	char pTxt[4][128];
@@ -689,14 +702,35 @@ void cExp_Size_Perception::sub_display()
 	DISP_TOOLS::Draw_Text(pTxt[1], -0.15f, m_view_height + 0.12f, 0.f);	// 	DISP_TOOLS::Draw_Text(pTxt[1], -7.2f, 3.2f, 0.f);
 	DISP_TOOLS::Draw_Text(pTxt[2], -0.15f, m_view_height + 0.11f, 0.f);	// 	DISP_TOOLS::Draw_Text(pTxt[2], -7.2f, 2.6f, 0.f);
 	DISP_TOOLS::Draw_Text(pTxt[3], -0.15F, m_view_height + 0.10f, 0.f);
+	
 
 	if (tmp) {
 		glColor3f(1, 0, 0);
 		DISP_TOOLS::DrawSquare(square_pos,200);
+		
+		//char txt = get_left_time();
+		//glColor3f(0, 0, 0);
+		//DISP_TOOLS::Draw_Text2(txt, -0.15F, m_view_height + 0.09f, 0.f);
 	}
 	if (draw_phantom_position_square) {
-		glColor3f(0, 1, 0);
+		glColor3f(0, 0, 0);
+		DISP_TOOLS::Draw_Text("right", -0.15F, m_view_height + 0.09f, 0.f);
+		
+		printf("square pos : %f", square_pos);
+		printf("phantom pos : %f", PHANTOM_TOOLS::get_phantom_x_position() * 2 + 500);
+		
+		double distance = square_pos - (PHANTOM_TOOLS::get_phantom_x_position() * 2 + 500);
+		if (distance<200 && distance >-200) glColor3f(0, 1, 0);
+		else glColor3f(0, 0, 0);
+		
+
+		
 		DISP_TOOLS::DrawSquare(PHANTOM_TOOLS::get_phantom_x_position()*2+500, 100);
+		
+		glColor3f(0, 0, 0);
+		DISP_TOOLS::Draw_Text("left", -0.15F, m_view_height + 0.09f, 0.f);
+		glColor3f(0, 0, 0);
+		//DISP_TOOLS::Draw_Text2("left hand", PHANTOM_TOOLS::get_phantom_x_position() * 2 + 500, 200, 0.f);
 	}
 }
 
